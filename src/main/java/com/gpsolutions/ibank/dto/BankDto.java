@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class RoleDto extends BaseDto{
+public class BankDto extends BaseDto {
     private String name;
+    private String address;
+    private String phone;
 }

@@ -1,7 +1,9 @@
 package com.gpsolutions.ibank.repository;
 
-import com.gpsolutions.ibank.dbo.BankAccountDbo;
+import com.gpsolutions.ibank.entity.BankAccountEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface BankAccountRepository extends JpaRepository<BankAccountDbo, Long> {
+@Repository
+public interface BankAccountRepository extends JpaRepository<BankAccountEntity, Long> {
 }
