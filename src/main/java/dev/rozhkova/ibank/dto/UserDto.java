@@ -1,9 +1,11 @@
 package dev.rozhkova.ibank.dto;
 
 import dev.rozhkova.ibank.entity.BankAccountEntity;
+import dev.rozhkova.ibank.entity.PaymentHistoryEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
@@ -17,5 +19,6 @@ public class UserDto extends BaseDto{
     private String login;
     private String password;
     private Boolean enabled;
-    private List<BankAccountEntity> bankAccount;
+    private List<BankAccountDto> bankAccount;
+    private List<PaymentHistoryDto> paymentHistory;
 }

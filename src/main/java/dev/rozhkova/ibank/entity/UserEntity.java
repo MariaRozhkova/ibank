@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.rozhkova.ibank.validator.ValidEmail;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Data
 @Entity
+@EqualsAndHashCode
 @NoArgsConstructor
 @Table(name = "user")
 public class UserEntity extends BaseEntity{
@@ -23,32 +25,24 @@ public class UserEntity extends BaseEntity{
   private String lastName;
   private String patronymic;
   @NotNull
-  /*@UniqueElements*/
-  @Column(name = "passport_number")
+  @Column(name = "passport_number", unique = true)
   private String passportNumber;
- /* @UniqueElements*/
   @NotNull
   @ValidEmail
+  @Column(unique = true)
   private String email;
   @NotNull
-  /*@UniqueElements*/
+  @Column(unique = true)
   private String login;
   @NotNull
   private String password;
-  /*@Column(columnDefinition = "boolean default 1")*/
+  @Column(columnDefinition = "boolean default true")
   private Boolean enabled;
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
   @JsonIgnore
   private List<BankAccountEntity> bankAccount;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+  @JsonIgnore
+  private List<PaymentHistoryEntity> paymentHistory;
 
-    public UserEntity(@NotNull String firstName, @NotNull String lastName, String patronymic, @NotNull String passportNumber, @NotNull String email, @NotNull String login, @NotNull String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.patronymic = patronymic;
-        this.passportNumber = passportNumber;
-        this.email = email;
-        this.login = login;
-        this.password = password;
-        this.enabled = true;
-    }
 }

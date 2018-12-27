@@ -3,7 +3,7 @@ package dev.rozhkova.ibank.service;
 import dev.rozhkova.ibank.converter.UserConverter;
 import dev.rozhkova.ibank.entity.UserEntity;
 import dev.rozhkova.ibank.dto.UserDto;
-import dev.rozhkova.ibank.exceptions.UserException;
+import dev.rozhkova.ibank.exception.UserException;
 import dev.rozhkova.ibank.repository.UserRepository;
 import lombok.AllArgsConstructor;
 /*import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;*/
@@ -27,7 +27,6 @@ public class UserService {
     public void create(final UserDto userDto) throws UserException {
         UserEntity userEntity = userConverter.convertToDbo(userDto);
         /*userEntity.setPassword(bCryptPasswordEncoder.encode(userEntity.getPassword()));*/
-        userEntity.setPassword(userEntity.getPassword());
         userRepository.save(userEntity);
     }
 

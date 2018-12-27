@@ -13,6 +13,6 @@ public class BankAccountDto extends BaseDto{
     private Double moneyAmount;
     private UserEntity user;
     private String accountNumber;
-    private List<BankCardEntity> bankCardEntity;
+    private List<BankCardDto> bankCardEntity;
     private Boolean enabled;
 }

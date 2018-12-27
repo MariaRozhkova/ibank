@@ -3,7 +3,9 @@ package dev.rozhkova.ibank.converter;
 import dev.rozhkova.ibank.dto.PaymentHistoryDto;
 import dev.rozhkova.ibank.entity.PaymentHistoryEntity;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PaymentHistoryConverter implements DtoDboConverter<PaymentHistoryDto, PaymentHistoryEntity> {
     @Override
     public PaymentHistoryDto convertToDto(PaymentHistoryEntity dbo) {

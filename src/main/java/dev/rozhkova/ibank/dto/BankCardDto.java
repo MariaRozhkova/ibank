@@ -11,7 +11,7 @@ import java.sql.Date;
 public class BankCardDto extends BaseDto {
     private String cardNumber;
     private String cardHolderName;
-    private Date date;
+    private String date;
     private int cvv;
     private BankAccountEntity bankAccount;
     private Boolean enabled;

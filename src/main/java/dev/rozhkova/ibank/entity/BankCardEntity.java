@@ -1,6 +1,7 @@
 package dev.rozhkova.ibank.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.sql.Date;
 
 @Data
 @Entity
+@EqualsAndHashCode
 @Table(name = "bank_card")
 @NoArgsConstructor
 public class BankCardEntity extends BaseEntity {
@@ -20,7 +22,7 @@ public class BankCardEntity extends BaseEntity {
     private String cardHolderName;
     @NotNull
     @Column(name = "valid_date")
-    private Date date;
+    private String date;
     @NotNull
     private int cvv;
     @NotNull

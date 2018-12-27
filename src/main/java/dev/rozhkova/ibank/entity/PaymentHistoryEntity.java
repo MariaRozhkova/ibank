@@ -1,29 +1,40 @@
 package dev.rozhkova.ibank.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Entity
 @NoArgsConstructor
+@EqualsAndHashCode
 @Table(name = "payment_history")
 public class PaymentHistoryEntity extends BaseEntity {
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "user")
     private UserEntity user;
     @NotNull
-    @Column(name = "date_operation")
     @CreationTimestamp
-    private LocalDateTime dateOperation;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "date_operation")
+    private Date dateOperation;
     @NotNull
     @Column(name = "money_amount")
     private Double moneyAmount;
-
-    //добавить другие поля
+    @NotNull
+    @Column(name = "payment_account")
+    @Fetch(value = FetchMode.SUBSELECT)
+    private String paymentAccount;
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "payment_operation")
+    private PaymentOperationEntity paymentOperation;
 }

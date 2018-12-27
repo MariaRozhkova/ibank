@@ -41,6 +41,14 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="add_user_info" author="mary">
+        <sql>
+            insert into user(first_name, last_name, patronymic, passport_number, email, login, password) values
+            ("James", "Alan", "Hetfield", "HC1235685", "jamesalan@mail.ru", "james_alan", "jalan"),
+            ("Vladzislav", "Jum", "Egorovich", "HB3567812", "vladislavjum@mail.ru", "vladislav_jum", "vjum")
+        </sql>
+    </changeSet>
+
     <changeSet id="create_bank_table" author="mary">
         <createTable tableName="bank">
             <column name="id" type="int" autoIncrement="true">
@@ -58,6 +66,13 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="add_bank_info" author="mary">
+        <sql>
+            insert into bank(name, address, phone) values
+            ("M_Bank", "St. Lenina, 23", "(017)6834756")
+        </sql>
+    </changeSet>
+
     <changeSet id="create_bank_account_table" author="mary">
         <createTable tableName="bank_account">
             <column name="id" type="int" autoIncrement="true">
@@ -69,7 +84,7 @@
             <column name="money_amount" type="numeric">
                 <constraints nullable="false"/>
             </column>
-            <column name="user_id" type="int">
+            <column name="user" type="int">
                 <constraints
                         referencedTableName="user"
                         referencedColumnNames="id"
@@ -77,6 +92,13 @@
             </column>
             <column name="enabled" type="boolean" defaultValueBoolean="true"/>
         </createTable>
+    </changeSet>
+
+    <changeSet id="add_bank_account" author="mary">
+        <sql>
+            insert into bank_account(account_number, money_amount, user) values
+            ("478134978234", 320.14, 1)
+        </sql>
     </changeSet>
 
     <changeSet id="create_bank_card_table" author="mary">
@@ -106,27 +128,11 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="create_payment_history_table" author="mary">
-        <createTable tableName="payment_history">
-            <column name="id" type="int" autoIncrement="true">
-                <constraints primaryKey="true"/>
-            </column>
-            <column name="user" type="int">
-                <constraints
-                        referencedTableName="user"
-                        referencedColumnNames="id"
-                        foreignKeyName="user_fk_user_id"/>
-            </column>
-            <column name="date_operation" type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column name="money_amount" type="numeric">
-                <constraints nullable="false"/>
-            </column>
-
-            <!--добавить поля-->
-
-        </createTable>
+    <changeSet id="add_bank_card" author="mary">
+        <sql>
+            insert into bank_card(card_number, card_holder_name, valid_date, cvv, bank_account) values
+            ("384567123956", "INSTANT CARD", "09/21", "453", 1)
+        </sql>
     </changeSet>
 
     <!--<changeSet id="add_initial_role" author="mary">
@@ -134,13 +140,6 @@
             insert into role(name) values
             ("admin"),
             ("user")
-        </sql>
-    </changeSet>-->
-
-    <!--<changeSet id="change_user_enabled_column" author="mary">
-        <sql>
-            ALTER TABLE user
-            MODIFY COLUMN enabled boolean default true;
         </sql>
     </changeSet>-->
 

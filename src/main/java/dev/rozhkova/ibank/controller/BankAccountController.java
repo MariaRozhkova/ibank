@@ -1,7 +1,7 @@
-package dev.rozhkova.ibank.controllers;
+package dev.rozhkova.ibank.controller;
 
 import dev.rozhkova.ibank.dto.BankAccountDto;
-import dev.rozhkova.ibank.exceptions.UserException;
+import dev.rozhkova.ibank.exception.UserException;
 import dev.rozhkova.ibank.service.BankAccountService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,11 +14,11 @@ import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/bank_account")
+/*@RequestMapping("/bank_account")*/
 public class BankAccountController {
     private final BankAccountService bankAccountService;
 
-    @GetMapping("/list")
+    @GetMapping("/bank_account/list")
     public ResponseEntity getAllBankAccount() {
         try {
             final List<BankAccountDto> allBankAccount = bankAccountService.getAllBankAccount();
@@ -32,7 +32,7 @@ public class BankAccountController {
         }
     }
 
-    @PostMapping("/create")
+    @PostMapping("/bank_account/create")
     public ResponseEntity createBankAccount(@RequestBody final BankAccountDto bankAccountDto) {
         try {
             bankAccountService.createBankAccount(bankAccountDto);
@@ -43,7 +43,7 @@ public class BankAccountController {
         }
     }
 
-    @DeleteMapping("/remove")
+    @DeleteMapping("/bank_account/remove")
     public ResponseEntity removeBankAccount(@RequestBody final BankAccountDto bankAccountDto) {
         try{
             bankAccountService.removeBankAccount(bankAccountDto);

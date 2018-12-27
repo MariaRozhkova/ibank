@@ -2,7 +2,7 @@ package dev.rozhkova.ibank.service;
 
 import dev.rozhkova.ibank.converter.BankConverter;
 import dev.rozhkova.ibank.dto.BankDto;
-import dev.rozhkova.ibank.exceptions.UserException;
+import dev.rozhkova.ibank.exception.UserException;
 import dev.rozhkova.ibank.repository.BankRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

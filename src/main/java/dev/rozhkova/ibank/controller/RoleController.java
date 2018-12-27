@@ -1,4 +1,4 @@
-package dev.rozhkova.ibank.controllers;
+package dev.rozhkova.ibank.controller;
 
 import dev.rozhkova.ibank.dto.RoleDto;
 import dev.rozhkova.ibank.service.RoleService;

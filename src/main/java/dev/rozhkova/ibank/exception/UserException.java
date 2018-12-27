@@ -1,4 +1,4 @@
-package dev.rozhkova.ibank.exceptions;
+package dev.rozhkova.ibank.exception;
 
 public class UserException extends Exception {
     public UserException() {

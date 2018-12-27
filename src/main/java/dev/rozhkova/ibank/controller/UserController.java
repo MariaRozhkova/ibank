@@ -1,7 +1,7 @@
-package dev.rozhkova.ibank.controllers;
+package dev.rozhkova.ibank.controller;
 
 import dev.rozhkova.ibank.dto.UserDto;
-import dev.rozhkova.ibank.exceptions.UserException;
+import dev.rozhkova.ibank.exception.UserException;
 import dev.rozhkova.ibank.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
