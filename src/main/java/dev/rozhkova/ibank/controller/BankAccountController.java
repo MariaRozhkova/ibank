@@ -49,8 +49,9 @@ public class BankAccountController {
         }
     }
 
-    @PostMapping("/bank_account/create")
-    public ResponseEntity unlockBankAccount(@RequestBody final RequestDto requestDto) {
+    @PostMapping("/bank_account/unlock/{number}")
+    public ResponseEntity unlockBankAccount(@RequestBody final RequestDto requestDto, @PathVariable("number") String number) {
+        System.out.println("Number: " + number);
         String generatedValue = UUID.randomUUID().toString().replaceAll("-", "");
         String recipient = requestDto.getEmail();
         String msg = "This is your confirmation code: <a href=\"http://localhost:8080/myapp/registration?account="
