@@ -3,6 +3,7 @@ package dev.rozhkova.ibank.service;
 import dev.rozhkova.ibank.converter.BankAccountConverter;
 import dev.rozhkova.ibank.dto.BankAccountDto;
 import dev.rozhkova.ibank.entity.BankAccountEntity;
+import dev.rozhkova.ibank.entity.BankCardEntity;
 import dev.rozhkova.ibank.entity.UserEntity;
 import dev.rozhkova.ibank.repository.BankAccountRepository;
 import lombok.AllArgsConstructor;
@@ -40,6 +41,9 @@ public class BankAccountService {
             for (BankAccountEntity entity : accountEntityList) {
                 if (entity.getEnabled()) {
                     entity.setEnabled(false);
+                    for (BankCardEntity card: entity.getBankCardList()){
+                        card.setEnabled(false);
+                    }
                 }
             }
             bankAccountRepository.saveAll(accountEntityList);
@@ -52,6 +56,9 @@ public class BankAccountService {
             for (BankAccountEntity entity : accountEntityList) {
                 if (!entity.getEnabled()) {
                     entity.setEnabled(true);
+                    for (BankCardEntity card: entity.getBankCardList()){
+                        card.setEnabled(true);
+                    }
                 }
             }
             bankAccountRepository.saveAll(accountEntityList);
@@ -62,25 +69,32 @@ public class BankAccountService {
         BankAccountEntity entity = bankAccountRepository.findByUserAndId(user, bankAccountId);
         if (entity.getEnabled()) {
             entity.setEnabled(false);
+            for (BankCardEntity card: entity.getBankCardList()){
+                card.setEnabled(false);
+            }
             bankAccountRepository.save(entity);
         }
     }
 
     public void unlockBankAccountByAccountNumber(String accountNumber) {
         BankAccountEntity entity = bankAccountRepository.findByAccountNumber(accountNumber);
+        unlockCards(entity);
+
+    }
+
+    private void unlockCards(BankAccountEntity entity) {
         if (!entity.getEnabled()) {
             entity.setEnabled(true);
+            for (BankCardEntity card: entity.getBankCardList()){
+                card.setEnabled(true);
+            }
             bankAccountRepository.save(entity);
         }
-
     }
 
     public void unlockBankAccountByUserAndId(UserEntity user, Long bankAccountId) {
         BankAccountEntity entity = bankAccountRepository.findByUserAndId(user, bankAccountId);
-        if (!entity.getEnabled()) {
-            entity.setEnabled(true);
-            bankAccountRepository.save(entity);
-        }
+        unlockCards(entity);
 
     }
 

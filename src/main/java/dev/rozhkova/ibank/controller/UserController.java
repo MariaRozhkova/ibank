@@ -80,7 +80,7 @@ public class UserController {
             user.setEnabled(true);
             userService.saveUser(user);
             bankAccountService.unlockAllBankAccountEntityByUser(user);
-            return new ResponseEntity<>("Accounts has been locked successfully", HttpStatus.OK);
+            return new ResponseEntity<>("Accounts has been unlocked successfully", HttpStatus.OK);
         } catch (UserException e) {
             return new ResponseEntity<>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }

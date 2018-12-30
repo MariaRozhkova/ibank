@@ -1,11 +1,13 @@
 package dev.rozhkova.ibank.entity;
 
+import dev.rozhkova.ibank.utils.DateUtility;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -29,5 +31,22 @@ public class BankCardEntity extends BaseEntity {
     @JoinColumn(name = "bank_account")
     private BankAccountEntity bankAccount;
     private Boolean enabled;
+
+    public boolean getEnabled() {
+        LocalDate cardDate = DateUtility.parse(date);
+        if (cardDate == null || cardDate.isBefore((LocalDate.now()))) {
+            enabled = false;
+        }
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        LocalDate cardDate = DateUtility.parse(date);
+        if (cardDate == null || cardDate.isBefore((LocalDate.now()))) {
+            this.enabled = false;
+        } else {
+            this.enabled = enabled;
+        }
+    }
 
 }
