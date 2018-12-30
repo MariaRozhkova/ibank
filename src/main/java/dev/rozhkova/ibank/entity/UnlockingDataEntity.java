@@ -14,14 +14,16 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "unlocking_data")
-public class UnlockingDataEntity {
+public class UnlockingDataEntity extends BaseEntity {
     @NotNull
+    @Column(name = "account_number")
     private String accountNumber;
 
     @NotNull
+    @Column(name = "generated_value")
     private String generatedValue;
 
     @NotNull
     @Column(columnDefinition = "boolean default true")
-    private boolean isValid;
+    private boolean valid;
 }

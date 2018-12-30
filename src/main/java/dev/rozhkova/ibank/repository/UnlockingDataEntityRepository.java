@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UnlockingDataEntityRepository extends JpaRepository<UnlockingDataEntity, Long> {
-    UnlockingDataEntity findFirstByAccountNumberOrderByAccountNumberDesc(final String accountNumber);
+    UnlockingDataEntity findByAccountNumberAndGeneratedValueAndValid(final String accountNumber, final String generatedValue, boolean valid);
 }

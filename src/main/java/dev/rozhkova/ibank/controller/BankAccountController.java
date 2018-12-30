@@ -55,12 +55,13 @@ public class BankAccountController {
     public ResponseEntity unlockBankAccount(@RequestBody final RequestDto requestDto) {
         String generatedValue = UUID.randomUUID().toString().replaceAll("-", "");
         String recipient = requestDto.getEmail();
-        String msg = "This is your confirmation code: <a href=\"http://localhost:8080/api/confirmationcode?account="
+        String msg = "This is your confirmation link to unlock bank account: <a href=\"http://localhost:8080/api/confirmation?account="
                 + requestDto.getAccountNumber() + "&key=" + generatedValue + "\">confirm account unlocking</a>";
         String subject = "Confirmation from iBank";
         UnlockingDataEntity newData = new UnlockingDataEntity();
         newData.setAccountNumber(requestDto.getAccountNumber());
         newData.setGeneratedValue(generatedValue);
+        newData.setValid(true);
         unlockingDataEntityService.save(newData);
         String host = emailConfiguration.getHost();
         String port = emailConfiguration.getPort();

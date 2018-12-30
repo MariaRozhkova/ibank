@@ -20,7 +20,7 @@ public class UnlockingDataEntityService {
         unlockingDataEntityRepository.save(entity);
     }
 
-    public UnlockingDataEntity getLastByAccountNumber(String accountNumber) {
-        return unlockingDataEntityRepository.findFirstByAccountNumberOrderByAccountNumberDesc(accountNumber);
+    public UnlockingDataEntity findByAccountNumberAndGeneratedValue(String accountNumber, String generatedValue) {
+        return unlockingDataEntityRepository.findByAccountNumberAndGeneratedValueAndValid(accountNumber, generatedValue, true);
     }
 }

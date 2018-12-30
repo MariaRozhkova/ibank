@@ -64,6 +64,14 @@ public class BankAccountService {
             entity.setEnabled(false);
             bankAccountRepository.save(entity);
         }
+    }
+
+    public void unlockBankAccountByAccountNumber(String accountNumber) {
+        BankAccountEntity entity = bankAccountRepository.findByAccountNumber(accountNumber);
+        if (!entity.getEnabled()) {
+            entity.setEnabled(true);
+            bankAccountRepository.save(entity);
+        }
 
     }
 
