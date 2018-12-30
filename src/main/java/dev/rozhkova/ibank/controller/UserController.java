@@ -1,7 +1,10 @@
 package dev.rozhkova.ibank.controller;
 
 import dev.rozhkova.ibank.dto.UserDto;
+import dev.rozhkova.ibank.entity.BankAccountEntity;
+import dev.rozhkova.ibank.entity.UserEntity;
 import dev.rozhkova.ibank.exception.UserException;
+import dev.rozhkova.ibank.service.BankAccountService;
 import dev.rozhkova.ibank.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final BankAccountService bankAccountService;
 
     @GetMapping("/list")
     public ResponseEntity getAllUsers() {
@@ -52,6 +56,34 @@ public class UserController {
             }
         } catch (UserException ex) {
             return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/lockUser/{id}")
+    public ResponseEntity lockUserAccounts(@PathVariable final Long id) {
+        UserEntity user;
+        try {
+            user = userService.getUserEntityById(id);
+            user.setEnabled(false);
+            userService.saveUser(user);
+            bankAccountService.lockAllBankAccountEntityByUser(user);
+            return new ResponseEntity("Accounts has been locked successfully", HttpStatus.OK);
+        } catch (UserException e) {
+            return new ResponseEntity(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/unlockUser/{id}")
+    public ResponseEntity unlockUserAccounts(@PathVariable final Long id) {
+        UserEntity user;
+        try {
+            user = userService.getUserEntityById(id);
+            user.setEnabled(true);
+            userService.saveUser(user);
+            bankAccountService.unlockAllBankAccountEntityByUser(user);
+            return new ResponseEntity("Accounts has been locked successfully", HttpStatus.OK);
+        } catch (UserException e) {
+            return new ResponseEntity(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @Entity
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "bank_account")
 public class BankAccountEntity extends BaseEntity{
   @NotNull

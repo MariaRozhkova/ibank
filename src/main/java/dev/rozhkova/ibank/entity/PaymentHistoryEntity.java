@@ -15,7 +15,7 @@ import java.util.Date;
 @Data
 @Entity
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "payment_history")
 public class PaymentHistoryEntity extends BaseEntity {
     @ManyToOne

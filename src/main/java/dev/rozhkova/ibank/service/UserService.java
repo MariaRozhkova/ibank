@@ -31,11 +31,19 @@ public class UserService {
     }
 
     public List<UserDto> getAllUsers() throws UserException {
-       return userRepository.findAll().stream().map(userConverter::convertToDto).collect(Collectors.toList());
+        return userRepository.findAll().stream().map(userConverter::convertToDto).collect(Collectors.toList());
     }
 
     public UserDto getUserById(final Long id) throws UserException {
         return userConverter.convertToDto(userRepository.findById(id).get());
+    }
+
+    public UserEntity getUserEntityById(final Long id) throws UserException {
+        return userRepository.findById(id).get();
+    }
+
+    public void saveUser(UserEntity userEntity) {
+        userRepository.save(userEntity);
     }
 
     public void removeUser(final UserDto userDto) throws UserException {

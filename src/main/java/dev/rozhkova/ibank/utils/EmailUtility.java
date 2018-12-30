@@ -14,7 +14,6 @@ import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
@@ -34,7 +33,7 @@ public class EmailUtility {
 	public static void sendEmailWithAttachment(String host, String port,
 			final String userName, final String password, String toAddress,
 			String subject, String message, List<File> attachedFiles)
-					throws AddressException, MessagingException {
+					throws MessagingException {
 		// sets SMTP server properties
 		Properties properties = new Properties();
 		properties.put("mail.smtp.host", host);

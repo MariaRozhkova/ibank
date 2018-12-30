@@ -6,11 +6,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
 
 @Data
 @Entity
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "bank_card")
 @NoArgsConstructor
 public class BankCardEntity extends BaseEntity {

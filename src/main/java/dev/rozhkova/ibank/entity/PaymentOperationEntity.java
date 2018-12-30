@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "payment_operation")
 public class PaymentOperationEntity extends BaseEntity {

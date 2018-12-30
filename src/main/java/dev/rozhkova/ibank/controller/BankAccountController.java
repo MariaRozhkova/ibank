@@ -26,31 +26,26 @@ public class BankAccountController {
 
     @GetMapping("/bank_account/list")
     public ResponseEntity getAllBankAccount() {
-        try {
-            final List<BankAccountDto> allBankAccount = bankAccountService.getAllBankAccount();
-            if (allBankAccount != null) {
-                return new ResponseEntity<>(allBankAccount, HttpStatus.FOUND);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-        } catch (UserException ex) {
-            return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        final List<BankAccountDto> allBankAccount = bankAccountService.getAllBankAccount();
+        if (allBankAccount != null) {
+            return new ResponseEntity<>(allBankAccount, HttpStatus.FOUND);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @PostMapping("/bank_account/create")
     public ResponseEntity createBankAccount(@RequestBody final BankAccountDto bankAccountDto) {
-        try {
-            bankAccountService.createBankAccount(bankAccountDto);
-            return new ResponseEntity<>("New bank account created", HttpStatus.CREATED);
+        bankAccountService.createBankAccount(bankAccountDto);
+        return new ResponseEntity<>("New bank account created", HttpStatus.CREATED);
 
-        } catch (UserException ex) {
-            return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+
     }
 
     @PostMapping("/bank_account/unlock/{number}")
-    public ResponseEntity unlockBankAccount(@RequestBody final RequestDto requestDto, @PathVariable("number") String number) {
+    public ResponseEntity unlockBankAccount(@RequestBody final RequestDto requestDto,
+                                            @PathVariable("number") String number) {
         System.out.println("Number: " + number);
         String generatedValue = UUID.randomUUID().toString().replaceAll("-", "");
         String recipient = requestDto.getEmail();
@@ -72,11 +67,9 @@ public class BankAccountController {
 
     @DeleteMapping("/bank_account/remove")
     public ResponseEntity removeBankAccount(@RequestBody final BankAccountDto bankAccountDto) {
-        try {
-            bankAccountService.removeBankAccount(bankAccountDto);
-            return new ResponseEntity<>("Bank account removed", OK);
-        } catch (UserException ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+
+        bankAccountService.removeBankAccount(bankAccountDto);
+        return new ResponseEntity<>("Bank account removed", OK);
+
     }
 }

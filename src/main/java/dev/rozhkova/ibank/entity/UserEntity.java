@@ -13,7 +13,7 @@ import java.util.List;
 
 @Data
 @Entity
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @Table(name = "user")
 public class UserEntity extends BaseEntity{
