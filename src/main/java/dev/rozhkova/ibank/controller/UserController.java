@@ -1,7 +1,6 @@
 package dev.rozhkova.ibank.controller;
 
 import dev.rozhkova.ibank.dto.UserDto;
-import dev.rozhkova.ibank.entity.BankAccountEntity;
 import dev.rozhkova.ibank.entity.UserEntity;
 import dev.rozhkova.ibank.exception.UserException;
 import dev.rozhkova.ibank.service.BankAccountService;
@@ -36,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity createUser(@RequestBody final UserDto userDto) {
+    public ResponseEntity<String> createUser(@RequestBody final UserDto userDto) {
         try {
             userService.create(userDto);
             return new ResponseEntity<>("User created", HttpStatus.CREATED);
@@ -60,50 +59,50 @@ public class UserController {
     }
 
     @GetMapping("/lockUser/{id}")
-    public ResponseEntity lockUserAccounts(@PathVariable final Long id) {
+    public ResponseEntity<String> lockUserAccounts(@PathVariable final Long id) {
         UserEntity user;
         try {
             user = userService.getUserEntityById(id);
             user.setEnabled(false);
             userService.saveUser(user);
             bankAccountService.lockAllBankAccountEntityByUser(user);
-            return new ResponseEntity("Accounts has been locked successfully", HttpStatus.OK);
+            return new ResponseEntity<>("Accounts has been locked successfully", HttpStatus.OK);
         } catch (UserException e) {
-            return new ResponseEntity(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/unlockUser/{id}")
-    public ResponseEntity unlockUserAccounts(@PathVariable final Long id) {
+    public ResponseEntity<String> unlockUserAccounts(@PathVariable final Long id) {
         UserEntity user;
         try {
             user = userService.getUserEntityById(id);
             user.setEnabled(true);
             userService.saveUser(user);
             bankAccountService.unlockAllBankAccountEntityByUser(user);
-            return new ResponseEntity("Accounts has been locked successfully", HttpStatus.OK);
+            return new ResponseEntity<>("Accounts has been locked successfully", HttpStatus.OK);
         } catch (UserException e) {
-            return new ResponseEntity(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @DeleteMapping("/remove")
-    public ResponseEntity removeUser(@RequestBody final UserDto userDto) {
+    public ResponseEntity<String> removeUser(@RequestBody final UserDto userDto) {
         try {
             userService.removeUser(userDto);
-            return new ResponseEntity("User removed", HttpStatus.OK);
+            return new ResponseEntity<>("User removed", HttpStatus.OK);
         } catch (UserException ex) {
             return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping(value = "/{id}/update")
-    public ResponseEntity updateUser(@PathVariable Long id, @RequestBody UserDto userAfterUpdate) {
+    public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody UserDto userAfterUpdate) {
         try {
             userService.updateUser(id, userAfterUpdate);
-            return new ResponseEntity("User updated", HttpStatus.OK);
+            return new ResponseEntity<>("User updated", HttpStatus.OK);
         } catch (UserException ex) {
-            return new ResponseEntity(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

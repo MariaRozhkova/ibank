@@ -3,7 +3,6 @@ package dev.rozhkova.ibank.controller;
 import dev.rozhkova.ibank.configuration.EmailConfiguration;
 import dev.rozhkova.ibank.dto.BankAccountDto;
 import dev.rozhkova.ibank.dto.RequestDto;
-import dev.rozhkova.ibank.exception.UserException;
 import dev.rozhkova.ibank.service.BankAccountService;
 import dev.rozhkova.ibank.utils.EmailUtility;
 import lombok.AllArgsConstructor;
@@ -43,14 +42,18 @@ public class BankAccountController {
 
     }
 
-    @PostMapping("/bank_account/unlock/{number}")
-    public ResponseEntity unlockBankAccount(@RequestBody final RequestDto requestDto,
-                                            @PathVariable("number") String number) {
-        System.out.println("Number: " + number);
+    /**
+     * this method sends email with come code to unlock bank account
+     *
+     * @param requestDto - entity that includes email and account number
+     * @return ResponseEntity
+     */
+    @PostMapping("/bank_account/unlock")
+    public ResponseEntity unlockBankAccount(@RequestBody final RequestDto requestDto) {
         String generatedValue = UUID.randomUUID().toString().replaceAll("-", "");
         String recipient = requestDto.getEmail();
-        String msg = "This is your confirmation code: <a href=\"http://localhost:8080/myapp/registration?account="
-                + requestDto.getAccountNumber() + "&key=" + generatedValue + "\">activate</a>";
+        String msg = "This is your confirmation code: <a href=\"http://localhost:8080/api/confirmationcode?account="
+                + requestDto.getAccountNumber() + "&key=" + generatedValue + "\">confirm account unlocking</a>";
         String subject = "Confirmation from iBank";
         String host = emailConfiguration.getHost();
         String port = emailConfiguration.getPort();

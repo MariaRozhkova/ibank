@@ -5,7 +5,6 @@ import dev.rozhkova.ibank.converter.UserConverter;
 import dev.rozhkova.ibank.dto.BankAccountDto;
 import dev.rozhkova.ibank.dto.BankCardDto;
 import dev.rozhkova.ibank.dto.UserDto;
-import dev.rozhkova.ibank.entity.BankAccountEntity;
 import dev.rozhkova.ibank.entity.UserEntity;
 import dev.rozhkova.ibank.exception.UserException;
 import dev.rozhkova.ibank.service.BankAccountService;
@@ -31,7 +30,7 @@ public class BankAccountOperationController {
 
     @GetMapping("/users/{id}/bankAccount/list")
     public ResponseEntity getAllBankAccountByUser(@PathVariable final Long id) {
-        try{
+        try {
             final UserDto userDto = userService.getUserById(id);
             final List<BankAccountDto> allBankAccountByUser = bankAccountService.getAllBankAccountByUser(userConverter.convertToDbo(userDto));
             if (allBankAccountByUser != null) {
@@ -47,7 +46,7 @@ public class BankAccountOperationController {
     @GetMapping("/users/{userId}/bankAccount/list/{bankAccountId}")
     public ResponseEntity getAllBankAccountByUserAndId(@PathVariable final Long userId,
                                                        @PathVariable final Long bankAccountId) {
-        try{
+        try {
             final UserDto userDto = userService.getUserById(userId);
             final BankAccountDto bankAccountByIdAndUser = bankAccountService.getBankAccountByUserAndId(userConverter.convertToDbo(userDto), bankAccountId);
             return new ResponseEntity<>(bankAccountByIdAndUser, HttpStatus.FOUND);
@@ -58,7 +57,7 @@ public class BankAccountOperationController {
 
     @GetMapping("/users/{userId}/bankAccount/list/{bankAccountId}/bankCard/list")
     public ResponseEntity getAllBankCardByAccount(@PathVariable final Long userId,
-                                                     @PathVariable final Long bankAccountId) {
+                                                  @PathVariable final Long bankAccountId) {
         try {
             final UserDto userDto = userService.getUserById(userId);
             final BankAccountDto bankAccountDto = bankAccountService.getBankAccountByUserAndId(userConverter.convertToDbo(userDto), bankAccountId);
@@ -69,8 +68,43 @@ public class BankAccountOperationController {
                 return new ResponseEntity(HttpStatus.NOT_FOUND);
             }
         } catch (UserException ex) {
-            return new ResponseEntity<>(ex.toString(),HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     * this method lock bank account of user if exists
+     *
+     * @param id        - user id
+     * @param accountId - bank account id
+     * @return
+     */
+    @GetMapping("/users/{id}/bankAccount/{accountId}/lock")
+    public ResponseEntity<String> lockBankAccountByUserAndId(@PathVariable("id") final Long id, @PathVariable("accountId") final Long accountId) {
+        try {
+            UserEntity user = userService.getUserEntityById(id);
+            bankAccountService.lockBankAccountByUserAndId(user, accountId);
+            return new ResponseEntity<>("Account has been locked successfully!", HttpStatus.FOUND);
+        } catch (UserException ex) {
+            return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * this method unlock bank account of user if exists
+     *
+     * @param id        - user id
+     * @param accountId - bank account id
+     * @return
+     */
+    @GetMapping("/users/{id}/bankAccount/{accountId}/unlock")
+    public ResponseEntity<String> unlockBankAccountByUserAndId(@PathVariable("id") final Long id, @PathVariable("accountId") final Long accountId) {
+        try {
+            UserEntity user = userService.getUserEntityById(id);
+            bankAccountService.unlockBankAccountByUserAndId(user, accountId);
+            return new ResponseEntity<>("Account has been unlocked successfully!", HttpStatus.FOUND);
+        } catch (UserException ex) {
+            return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

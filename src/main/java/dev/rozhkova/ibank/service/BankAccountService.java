@@ -50,12 +50,30 @@ public class BankAccountService {
         List<BankAccountEntity> accountEntityList = bankAccountRepository.findByUser(user);
         if (accountEntityList.size() != 0) {
             for (BankAccountEntity entity : accountEntityList) {
-                if (entity.getEnabled()) {
+                if (!entity.getEnabled()) {
                     entity.setEnabled(true);
                 }
             }
             bankAccountRepository.saveAll(accountEntityList);
         }
+    }
+
+    public void lockBankAccountByUserAndId(UserEntity user, Long bankAccountId) {
+        BankAccountEntity entity = bankAccountRepository.findByUserAndId(user, bankAccountId);
+        if (entity.getEnabled()) {
+            entity.setEnabled(false);
+            bankAccountRepository.save(entity);
+        }
+
+    }
+
+    public void unlockBankAccountByUserAndId(UserEntity user, Long bankAccountId) {
+        BankAccountEntity entity = bankAccountRepository.findByUserAndId(user, bankAccountId);
+        if (!entity.getEnabled()) {
+            entity.setEnabled(true);
+            bankAccountRepository.save(entity);
+        }
+
     }
 
     public BankAccountDto getBankAccountByUserAndId(UserEntity user, Long bankAccountId) {

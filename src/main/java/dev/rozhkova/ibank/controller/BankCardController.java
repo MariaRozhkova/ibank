@@ -28,6 +28,26 @@ public class BankCardController {
         }
     }
 
+    @PutMapping("/lock/{id}")
+    public ResponseEntity lockBankCard(@PathVariable("id") final Long id) {
+        try {
+            bankCardService.lockCardById(id);
+            return new ResponseEntity<>("Bank card has been locked", OK);
+        } catch (UserException ex) {
+            return new ResponseEntity<>(ex.toString(), INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/unlock/{id}")
+    public ResponseEntity unlockBankCard(@PathVariable("id") final Long id) {
+        try {
+            bankCardService.unlockCardById(id);
+            return new ResponseEntity<>("Bank card has been locked", OK);
+        } catch (UserException ex) {
+            return new ResponseEntity<>(ex.toString(), INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/list")
     public ResponseEntity getAllBankCard() {
         try {
