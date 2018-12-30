@@ -3,7 +3,9 @@ package dev.rozhkova.ibank.controller;
 import dev.rozhkova.ibank.configuration.EmailConfiguration;
 import dev.rozhkova.ibank.dto.BankAccountDto;
 import dev.rozhkova.ibank.dto.RequestDto;
+import dev.rozhkova.ibank.entity.UnlockingDataEntity;
 import dev.rozhkova.ibank.service.BankAccountService;
+import dev.rozhkova.ibank.service.UnlockingDataEntityService;
 import dev.rozhkova.ibank.utils.EmailUtility;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ import static org.springframework.http.HttpStatus.OK;
 public class BankAccountController {
     private final BankAccountService bankAccountService;
     private final EmailConfiguration emailConfiguration;
+    private final UnlockingDataEntityService unlockingDataEntityService;
 
     @GetMapping("/bank_account/list")
     public ResponseEntity getAllBankAccount() {
@@ -48,13 +51,17 @@ public class BankAccountController {
      * @param requestDto - entity that includes email and account number
      * @return ResponseEntity
      */
-    @PostMapping("/bank_account/unlock")
+    @PostMapping("/bank_account/sendUnlockLetter")
     public ResponseEntity unlockBankAccount(@RequestBody final RequestDto requestDto) {
         String generatedValue = UUID.randomUUID().toString().replaceAll("-", "");
         String recipient = requestDto.getEmail();
         String msg = "This is your confirmation code: <a href=\"http://localhost:8080/api/confirmationcode?account="
                 + requestDto.getAccountNumber() + "&key=" + generatedValue + "\">confirm account unlocking</a>";
         String subject = "Confirmation from iBank";
+        UnlockingDataEntity newData = new UnlockingDataEntity();
+        newData.setAccountNumber(requestDto.getAccountNumber());
+        newData.setGeneratedValue(generatedValue);
+        unlockingDataEntityService.save(newData);
         String host = emailConfiguration.getHost();
         String port = emailConfiguration.getPort();
         String fromEmail = emailConfiguration.getUser();
