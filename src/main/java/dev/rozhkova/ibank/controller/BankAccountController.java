@@ -56,7 +56,7 @@ public class BankAccountController {
         String recipient = requestDto.getEmail();
         String msg = "This is your confirmation code: <a href=\"http://localhost:8080/myapp/registration?account="
                 + requestDto.getAccountNumber() + "&key=" + generatedValue + "\">activate</a>";
-        String subject = "Confirmation from MySite";
+        String subject = "Confirmation from iBank";
         String host = emailConfiguration.getHost();
         String port = emailConfiguration.getPort();
         String fromEmail = emailConfiguration.getUser();
