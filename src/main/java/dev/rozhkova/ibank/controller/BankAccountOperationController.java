@@ -77,8 +77,7 @@ public class BankAccountOperationController {
      *
      * @param id        - user id
      * @param accountId - bank account id
-     * @return
-     */
+      */
     @GetMapping("/users/{id}/bankAccount/{accountId}/lock")
     public ResponseEntity<String> lockBankAccountByUserAndId(@PathVariable("id") final Long id, @PathVariable("accountId") final Long accountId) {
         try {
@@ -95,7 +94,6 @@ public class BankAccountOperationController {
      *
      * @param id        - user id
      * @param accountId - bank account id
-     * @return
      */
     @GetMapping("/users/{id}/bankAccount/{accountId}/unlock")
     public ResponseEntity<String> unlockBankAccountByUserAndId(@PathVariable("id") final Long id, @PathVariable("accountId") final Long accountId) {

@@ -18,12 +18,12 @@ public class BankController {
     private final BankService bankService;
 
     @GetMapping("/info")
-    public ResponseEntity getBankInfo() {
+    public ResponseEntity<Object> getBankInfo() {
         try {
             BankDto bankDto = bankService.getBankInfo();
-            return new ResponseEntity(bankDto, HttpStatus.FOUND);
+            return new ResponseEntity<>(bankDto, HttpStatus.FOUND);
         } catch (UserException ex) {
-            return new ResponseEntity(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

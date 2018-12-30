@@ -1,13 +1,11 @@
 package dev.rozhkova.ibank.controller;
 
-import dev.rozhkova.ibank.converter.BankAccountConverter;
 import dev.rozhkova.ibank.converter.UserConverter;
 import dev.rozhkova.ibank.dto.BankAccountDto;
 import dev.rozhkova.ibank.dto.PaymentHistoryDto;
 import dev.rozhkova.ibank.dto.UserDto;
 import dev.rozhkova.ibank.exception.UserException;
 import dev.rozhkova.ibank.service.BankAccountService;
-import dev.rozhkova.ibank.service.BankCardService;
 import dev.rozhkova.ibank.service.PaymentHistoryService;
 import dev.rozhkova.ibank.service.UserService;
 import lombok.AllArgsConstructor;
@@ -22,9 +20,7 @@ public class PaymentOperationController {
 
     private final UserService userService;
     private final BankAccountService bankAccountService;
-    private final BankCardService bankCardService;
     private final UserConverter userConverter;
-    private final BankAccountConverter bankAccountConverter;
     private final PaymentHistoryService paymentHistoryService;
 
     @PostMapping("/{userId}/bankAccount/list/{bankAccountId}/payments")
