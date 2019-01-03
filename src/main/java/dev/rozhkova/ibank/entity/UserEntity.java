@@ -44,5 +44,7 @@ public class UserEntity extends BaseEntity{
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
   @JsonIgnore
   private List<PaymentHistoryEntity> paymentHistory;
-
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+  @JsonIgnore
+  private List<SavedPaymentEntity> savedPayment;
 }

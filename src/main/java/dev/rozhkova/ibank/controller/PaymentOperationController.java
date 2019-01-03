@@ -4,12 +4,10 @@ import dev.rozhkova.ibank.converter.BankAccountConverter;
 import dev.rozhkova.ibank.converter.UserConverter;
 import dev.rozhkova.ibank.dto.BankAccountDto;
 import dev.rozhkova.ibank.dto.PaymentHistoryDto;
+import dev.rozhkova.ibank.dto.SavedPaymentDto;
 import dev.rozhkova.ibank.dto.UserDto;
 import dev.rozhkova.ibank.exception.UserException;
-import dev.rozhkova.ibank.service.BankAccountService;
-import dev.rozhkova.ibank.service.BankCardService;
-import dev.rozhkova.ibank.service.PaymentHistoryService;
-import dev.rozhkova.ibank.service.UserService;
+import dev.rozhkova.ibank.service.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +24,7 @@ public class PaymentOperationController {
     private final UserConverter userConverter;
     private final BankAccountConverter bankAccountConverter;
     private final PaymentHistoryService paymentHistoryService;
+    private final SavedPaymentService savedPaymentService;
 
     @PostMapping("/{userId}/bankAccount/list/{bankAccountId}/payments")
     public ResponseEntity makePayment(@PathVariable final Long userId,
@@ -38,6 +37,13 @@ public class PaymentOperationController {
             Double moneyAfterOperation = moneyBeforeOperation - paymentHistoryDto.getMoneyAmount();
             bankAccountByIdAndUser.setMoneyAmount(moneyAfterOperation);
             bankAccountService.createBankAccount(bankAccountByIdAndUser);
+
+            SavedPaymentDto savedPaymentDto = new SavedPaymentDto();
+            savedPaymentDto.setMoneyAmount(paymentHistoryDto.getMoneyAmount());
+            savedPaymentDto.setUser(userDto);
+            savedPaymentDto.setPaymentAccount(paymentHistoryDto.getPaymentAccount());
+            savedPaymentDto.setPaymentOperation(paymentHistoryDto.getPaymentOperation());
+            savedPaymentService.create(savedPaymentDto);
 
             paymentHistoryDto.setUser(userDto);
             System.out.println(paymentHistoryDto.getMoneyAmount());

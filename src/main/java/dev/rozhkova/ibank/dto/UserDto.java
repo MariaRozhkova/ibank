@@ -21,4 +21,5 @@ public class UserDto extends BaseDto{
     private Boolean enabled;
     private List<BankAccountDto> bankAccount;
     private List<PaymentHistoryDto> paymentHistory;
+    private List<SavedPaymentDto> savedPayments;
 }
