@@ -24,4 +24,8 @@ public class PaymentHistoryService {
     public List<PaymentHistoryDto> getAllPaymentHistory() {
         return paymentHistoryRepository.findAll().stream().map(paymentHistoryConverter::convertToDto).collect(Collectors.toList());
     }
+
+    public PaymentHistoryDto getPaymentHistoryById(final Long id) {
+        return paymentHistoryConverter.convertToDto(paymentHistoryRepository.findById(id).get());
+    }
 }

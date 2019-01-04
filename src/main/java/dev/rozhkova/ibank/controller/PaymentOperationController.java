@@ -38,13 +38,6 @@ public class PaymentOperationController {
             bankAccountByIdAndUser.setMoneyAmount(moneyAfterOperation);
             bankAccountService.createBankAccount(bankAccountByIdAndUser);
 
-            SavedPaymentDto savedPaymentDto = new SavedPaymentDto();
-            savedPaymentDto.setMoneyAmount(paymentHistoryDto.getMoneyAmount());
-            savedPaymentDto.setUser(userDto);
-            savedPaymentDto.setPaymentAccount(paymentHistoryDto.getPaymentAccount());
-            savedPaymentDto.setPaymentOperation(paymentHistoryDto.getPaymentOperation());
-            savedPaymentService.create(savedPaymentDto);
-
             paymentHistoryDto.setUser(userDto);
             System.out.println(paymentHistoryDto.getMoneyAmount());
             paymentHistoryService.create(paymentHistoryDto);
@@ -53,5 +46,4 @@ public class PaymentOperationController {
             return new ResponseEntity<>(ex.toString(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }
