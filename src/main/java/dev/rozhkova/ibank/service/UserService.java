@@ -17,9 +17,9 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class UserService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
     //private BCryptPasswordEncoder bCryptPasswordEncoder;
-    private UserConverter userConverter;
+    private final UserConverter userConverter;
 
     public UserEntity findByLogin(final String login) {
         return userRepository.findByLogin(login);
@@ -36,33 +36,33 @@ public class UserService {
     }
 
     public UserDto getUserById(final Long id) throws UserException {
-        return userConverter.convertToDto(userRepository.findById(id).get());
+        return userConverter.convertToDto(userRepository.findById(id).orElse(new UserEntity()));
     }
 
     public UserEntity getUserEntityById(final Long id) throws UserException {
         return userRepository.findById(id).orElse(new UserEntity());
     }
 
-    public void removeUser(final UserDto userDto) throws UserException {
-        userRepository.delete(userConverter.convertToDbo(userDto));
+    public void removeUser(final Long id) throws UserException {
+        userRepository.deleteById(id);
     }
 
     public void updateUser(final Long id, final UserDto userAfterUpdate) throws UserException {
-        UserEntity userBeforeUpdate = userRepository.findById(id).get();
-        UserEntity userAfterUpdateDbo = userConverter.convertToDbo(userAfterUpdate);
-        if (userAfterUpdateDbo.getFirstName() != null) {
+        final UserEntity userBeforeUpdate = userRepository.findById(id).orElse(new UserEntity());
+        final UserEntity userAfterUpdateDbo = userConverter.convertToDbo(userAfterUpdate);
+        if (!userAfterUpdateDbo.getFirstName().equals(userBeforeUpdate.getFirstName())) {
             userBeforeUpdate.setFirstName(userAfterUpdateDbo.getFirstName());
-        } else if (userAfterUpdateDbo.getLastName() != null) {
+        } else if (!userAfterUpdateDbo.getLastName().equals(userBeforeUpdate.getLastName())) {
             userBeforeUpdate.setFirstName(userAfterUpdateDbo.getLastName());
-        } else if (userAfterUpdateDbo.getPatronymic() != null) {
+        } else if (!userAfterUpdateDbo.getPatronymic().equals(userBeforeUpdate.getPatronymic())) {
             userBeforeUpdate.setPatronymic(userAfterUpdateDbo.getPatronymic());
-        } else if (userAfterUpdateDbo.getPassportNumber() != null) {
+        } else if (!userAfterUpdateDbo.getPassportNumber().equals(userBeforeUpdate.getPassportNumber())) {
             userBeforeUpdate.setPassportNumber(userAfterUpdateDbo.getPassportNumber());
-        } else if (userAfterUpdateDbo.getEmail() != null) {
+        } else if (!userAfterUpdateDbo.getEmail().equals(userBeforeUpdate.getEmail())) {
             userBeforeUpdate.setEmail(userAfterUpdateDbo.getEmail());
-        } else if (userAfterUpdateDbo.getLogin() != null) {
+        } else if (!userAfterUpdateDbo.getLogin().equals(userBeforeUpdate.getLogin())) {
             userBeforeUpdate.setLogin(userAfterUpdateDbo.getLogin());
-        } else if (userAfterUpdateDbo.getPassword() != null) {
+        } else if (!userAfterUpdateDbo.getPassword().equals(userBeforeUpdate.getPassword())) {
             userBeforeUpdate.setPassword(userAfterUpdateDbo.getPassword());
         }
         userRepository.save(userBeforeUpdate);
