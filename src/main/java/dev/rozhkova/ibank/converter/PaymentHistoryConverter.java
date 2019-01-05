@@ -3,7 +3,9 @@ package dev.rozhkova.ibank.converter;
 import dev.rozhkova.ibank.dto.BankCardDto;
 import dev.rozhkova.ibank.dto.PaymentHistoryDto;
 import dev.rozhkova.ibank.dto.PaymentOperationDto;
+import dev.rozhkova.ibank.entity.BankCardEntity;
 import dev.rozhkova.ibank.entity.PaymentHistoryEntity;
+import dev.rozhkova.ibank.entity.PaymentOperationEntity;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +41,12 @@ public class PaymentHistoryConverter implements DtoDboConverter<PaymentHistoryDt
     @Override
     public PaymentHistoryEntity convertToDbo(final PaymentHistoryDto dto) {
         final PaymentHistoryEntity paymentHistoryEntity = new PaymentHistoryEntity();
-        BeanUtils.copyProperties(dto, paymentHistoryEntity);
+        final BankCardEntity bankCardEntity = bankCardConverter.convertToDbo(dto.getBankCard());
+        paymentHistoryEntity.setBankCard(bankCardEntity);
+        paymentHistoryEntity.setMoneyAmount(dto.getMoneyAmount());
+        final PaymentOperationEntity paymentOperationEntity = paymentOperationConverter.convertToDbo(dto.getPaymentOperation());
+        paymentHistoryEntity.setPaymentOperation(paymentOperationEntity);
+        paymentHistoryEntity.setPaymentAccount(dto.getPaymentAccount());
         return paymentHistoryEntity;
     }
 }

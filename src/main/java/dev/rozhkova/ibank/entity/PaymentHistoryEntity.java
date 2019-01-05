@@ -24,7 +24,6 @@ public class PaymentHistoryEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "bank_card")
     private BankCardEntity bankCard;
-    @NotNull
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_operation")
@@ -34,9 +33,8 @@ public class PaymentHistoryEntity extends BaseEntity {
     private Double moneyAmount;
     @NotNull
     @Column(name = "payment_account")
-    @Fetch(value = FetchMode.SUBSELECT)
+    //@Fetch(value = FetchMode.SUBSELECT)
     private String paymentAccount;
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "payment_operation")
     private PaymentOperationEntity paymentOperation;

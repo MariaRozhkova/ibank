@@ -39,4 +39,8 @@ public class BankAccountService {
     public BankAccountDto getBankAccountByIdAndUserId(final Long bankAccountId, final Long userId) throws UserException {
         return bankAccountConverter.convertToDto(bankAccountRepository.findByIdAndUserId(bankAccountId, userId));
     }
+
+    public void updateMoneyAmount(final Double moneyAmount, final Long id) {
+        bankAccountRepository.updateMoneyAmount(moneyAmount, id);
+    }
 }

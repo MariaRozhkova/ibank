@@ -10,5 +10,4 @@ import java.util.List;
 public interface PaymentHistoryRepository extends JpaRepository<PaymentHistoryEntity, Long> {
     List<PaymentHistoryEntity> findByBankCardCardNumber(String number);
     List<PaymentHistoryEntity> findByUserId(Long id);
-
 }

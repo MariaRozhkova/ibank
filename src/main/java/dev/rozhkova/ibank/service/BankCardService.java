@@ -35,4 +35,8 @@ public class BankCardService {
         final List<BankCardEntity> bankCardEntities = bankCardRepository.findByBankAccountId(id);
         return bankCardConverter.convertToDto(bankCardEntities);
     }
+
+    public BankAccountEntity getBankAccountByCardNumber(final String cardNumber) {
+        return bankCardRepository.findByCardNumber(cardNumber).getBankAccount();
+    }
 }

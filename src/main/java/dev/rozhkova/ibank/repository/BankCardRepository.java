@@ -12,4 +12,5 @@ import java.util.List;
 @Repository
 public interface BankCardRepository extends JpaRepository<BankCardEntity, Long> {
     List<BankCardEntity> findByBankAccountId(Long id);
+    BankCardEntity findByCardNumber(String cardNumber);
 }

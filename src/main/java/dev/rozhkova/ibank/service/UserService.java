@@ -38,6 +38,10 @@ public class UserService {
         return userConverter.convertToDto(userRepository.findById(id).get());
     }
 
+    public UserEntity getUserEntityById(final Long id) throws UserException {
+        return userRepository.findById(id).orElse(new UserEntity());
+    }
+
     public void removeUser(final UserDto userDto) throws UserException {
         userRepository.delete(userConverter.convertToDbo(userDto));
     }

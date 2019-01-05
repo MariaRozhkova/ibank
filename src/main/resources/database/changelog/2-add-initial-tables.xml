@@ -43,9 +43,7 @@
                         referencedColumnNames="id"
                         foreignKeyName="bank_card_fk_bank_card_id"/>
             </column>
-            <column name="date_operation" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
-                <constraints nullable="false"/>
-            </column>
+            <column name="date_operation" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
             <column name="money_amount" type="numeric">
                 <constraints nullable="false"/>
             </column>
