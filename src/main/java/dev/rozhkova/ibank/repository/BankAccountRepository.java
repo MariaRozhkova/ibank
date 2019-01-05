@@ -1,7 +1,6 @@
 package dev.rozhkova.ibank.repository;
 
 import dev.rozhkova.ibank.entity.BankAccountEntity;
-import dev.rozhkova.ibank.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

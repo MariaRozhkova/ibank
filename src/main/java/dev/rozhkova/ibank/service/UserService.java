@@ -1,16 +1,17 @@
 package dev.rozhkova.ibank.service;
 
 import dev.rozhkova.ibank.converter.UserConverter;
-import dev.rozhkova.ibank.entity.UserEntity;
 import dev.rozhkova.ibank.dto.UserDto;
+import dev.rozhkova.ibank.entity.UserEntity;
 import dev.rozhkova.ibank.exception.UserException;
 import dev.rozhkova.ibank.repository.UserRepository;
 import lombok.AllArgsConstructor;
-/*import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;*/
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+/*import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;*/
 
 @Service
 @AllArgsConstructor

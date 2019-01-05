@@ -1,12 +1,10 @@
 package dev.rozhkova.ibank.converter;
-
 import dev.rozhkova.ibank.dto.BankAccountDto;
 import dev.rozhkova.ibank.dto.BankCardDto;
 import dev.rozhkova.ibank.entity.BankAccountEntity;
 import dev.rozhkova.ibank.entity.BankCardEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 

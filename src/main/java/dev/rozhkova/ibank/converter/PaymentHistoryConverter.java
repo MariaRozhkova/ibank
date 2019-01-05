@@ -6,11 +6,8 @@ import dev.rozhkova.ibank.dto.PaymentOperationDto;
 import dev.rozhkova.ibank.entity.BankCardEntity;
 import dev.rozhkova.ibank.entity.PaymentHistoryEntity;
 import dev.rozhkova.ibank.entity.PaymentOperationEntity;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class PaymentHistoryConverter implements DtoDboConverter<PaymentHistoryDto, PaymentHistoryEntity> {

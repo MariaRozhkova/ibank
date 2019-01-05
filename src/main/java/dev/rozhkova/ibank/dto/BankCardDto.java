@@ -1,10 +1,7 @@
 package dev.rozhkova.ibank.dto;
 
-import dev.rozhkova.ibank.entity.BankAccountEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.sql.Date;
 
 @Data
 @NoArgsConstructor

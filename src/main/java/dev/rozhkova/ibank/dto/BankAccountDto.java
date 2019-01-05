@@ -1,7 +1,5 @@
 package dev.rozhkova.ibank.dto;
 
-import dev.rozhkova.ibank.entity.BankCardEntity;
-import dev.rozhkova.ibank.entity.UserEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

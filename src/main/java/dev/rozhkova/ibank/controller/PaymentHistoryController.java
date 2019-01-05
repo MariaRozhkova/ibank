@@ -1,11 +1,7 @@
 package dev.rozhkova.ibank.controller;
 
-import dev.rozhkova.ibank.converter.PaymentHistoryConverter;
-import dev.rozhkova.ibank.dto.BankAccountDto;
 import dev.rozhkova.ibank.dto.PaymentHistoryDto;
-import dev.rozhkova.ibank.dto.UserDto;
 import dev.rozhkova.ibank.entity.BankAccountEntity;
-import dev.rozhkova.ibank.entity.PaymentHistoryEntity;
 import dev.rozhkova.ibank.entity.UserEntity;
 import dev.rozhkova.ibank.exception.UserException;
 import dev.rozhkova.ibank.service.BankAccountService;
