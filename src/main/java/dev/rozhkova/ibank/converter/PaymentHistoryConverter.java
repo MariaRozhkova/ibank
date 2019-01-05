@@ -5,6 +5,9 @@ import dev.rozhkova.ibank.entity.PaymentHistoryEntity;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class PaymentHistoryConverter implements DtoDboConverter<PaymentHistoryDto, PaymentHistoryEntity> {
     @Override
@@ -19,5 +22,17 @@ public class PaymentHistoryConverter implements DtoDboConverter<PaymentHistoryDt
         final PaymentHistoryEntity paymentHistoryEntity = new PaymentHistoryEntity();
         BeanUtils.copyProperties(dto, paymentHistoryEntity);
         return paymentHistoryEntity;
+    }
+
+    public List<PaymentHistoryDto> convertToDto(final List<PaymentHistoryEntity> dbo) {
+        final List<PaymentHistoryDto> paymentHistoryDtos = new ArrayList<>();
+        dbo.forEach(paymentHistoryEntity -> paymentHistoryDtos.add(convertToDto(paymentHistoryEntity)));
+        return paymentHistoryDtos;
+    }
+
+    public List<PaymentHistoryEntity> convertToDbo(final List<PaymentHistoryDto> dto) {
+        final List<PaymentHistoryEntity> paymentHistoryEntities = new ArrayList<>();
+        dto.forEach(paymentHistoryDto -> paymentHistoryEntities.add(convertToDbo(paymentHistoryDto)));
+        return paymentHistoryEntities;
     }
 }

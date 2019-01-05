@@ -11,8 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 public class BankAccountDto extends BaseDto{
     private Double moneyAmount;
-    private UserEntity user;
+    private UserDto user;
     private String accountNumber;
-    private List<BankCardDto> bankCardEntity;
+    private List<BankCardDto> bankCardDto;
     private Boolean enabled;
 }

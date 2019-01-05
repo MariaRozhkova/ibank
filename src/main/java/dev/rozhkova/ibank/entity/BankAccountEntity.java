@@ -19,14 +19,18 @@ public class BankAccountEntity extends BaseEntity{
   @NotNull
   @Column(name = "account_number")
   private String accountNumber;
+
   @NotNull
   @Column(name = "money_amount")
   private Double moneyAmount;
+
   @ManyToOne
   @JoinColumn(name = "user")
   private UserEntity user;
+
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "bankAccount")
   @JsonIgnore
-  private List<BankCardEntity> bankCardList;
+  private List<BankCardEntity> bankCardEntity;
+
   private Boolean enabled;
 }
