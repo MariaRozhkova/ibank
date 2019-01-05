@@ -40,4 +40,6 @@ public class UserEntity extends BaseEntity{
   private List<BankAccountEntity> bankAccount;
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
   private List<PaymentHistoryEntity> paymentHistory;
+  @Column(columnDefinition = "varchar(50) default ROLE_USER")
+  private String role;
 }
