@@ -3,6 +3,7 @@ package dev.rozhkova.ibank.converter;
 import dev.rozhkova.ibank.dto.BankAccountDto;
 import dev.rozhkova.ibank.entity.UserEntity;
 import dev.rozhkova.ibank.dto.UserDto;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,14 +11,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class UserConverter implements DtoDboConverter<UserDto, UserEntity> {
 
     private final BankAccountConverter bankAccountConverter;
-
-    @Autowired
-    public UserConverter(final BankAccountConverter bankAccountConverter) {
-        this.bankAccountConverter = bankAccountConverter;
-    }
 
     @Override
     public UserDto convertToDto(final UserEntity dbo) {
