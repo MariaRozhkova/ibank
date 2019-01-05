@@ -20,11 +20,8 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 public class BankAccountOperationController {
-    private final UserService userService;
     private final BankAccountService bankAccountService;
     private final BankCardService bankCardService;
-    private final UserConverter userConverter;
-    private final BankAccountConverter bankAccountConverter;
 
     @GetMapping("/users/{id}/bankAccount/list")
     public ResponseEntity getAllBankAccountByUserId(@PathVariable final Long id) {
@@ -61,7 +58,7 @@ public class BankAccountOperationController {
             } else {
                 return new ResponseEntity(HttpStatus.NOT_FOUND);
             }
-        } catch (UserException ex) {
+        } catch (final UserException ex) {
             return new ResponseEntity<>(ex.toString(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

@@ -57,14 +57,14 @@ public class PaymentHistoryController {
                                       @RequestBody final PaymentHistoryDto paymentHistoryDto) {
         try {
             final BankAccountEntity bankAccountEntity = bankCardService.getBankAccountByCardNumber(paymentHistoryDto.getBankCard().getCardNumber());
-            Double moneyOnAccount = bankAccountEntity.getMoneyAmount();
-            Double moneyAfterOperation = moneyOnAccount - paymentHistoryDto.getMoneyAmount();
+            final Double moneyOnAccount = bankAccountEntity.getMoneyAmount();
+            final Double moneyAfterOperation = moneyOnAccount - paymentHistoryDto.getMoneyAmount();
 
             bankAccountService.updateMoneyAmount(moneyAfterOperation, bankAccountEntity.getId());
-            UserEntity userEntity = userService.getUserEntityById(userId);
+            final UserEntity userEntity = userService.getUserEntityById(userId);
             paymentHistoryService.makePayment(userEntity, paymentHistoryDto);
             return new ResponseEntity<>("Payment record created", HttpStatus.CREATED);
-        } catch (UserException ex) {
+        } catch (final UserException ex) {
             return new ResponseEntity<>(ex.toString(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

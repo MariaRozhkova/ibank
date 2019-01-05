@@ -20,10 +20,10 @@ public class BankController {
     @GetMapping("/info")
     public ResponseEntity getBankInfo() {
         try {
-            BankDto bankDto = bankService.getBankInfo();
-            return new ResponseEntity(bankDto, HttpStatus.FOUND);
-        } catch (UserException ex) {
-            return new ResponseEntity(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+            final BankDto bankDto = bankService.getBankInfo();
+            return new ResponseEntity<>(bankDto, HttpStatus.FOUND);
+        } catch (final UserException ex) {
+            return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -13,12 +13,13 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
+@RequestMapping("/bankAccount")
 @AllArgsConstructor
 public class BankAccountController {
 
     private final BankAccountService bankAccountService;
 
-    @GetMapping("/bankAccount/list")
+    @GetMapping("/list")
     public ResponseEntity getAllBankAccount() {
         try {
             final List<BankAccountDto> allBankAccount = bankAccountService.getAllBankAccount();
@@ -32,7 +33,7 @@ public class BankAccountController {
         }
     }
 
-    @PostMapping("/bankAccount/create")
+    @PostMapping("/create")
     public ResponseEntity createBankAccount(@RequestBody final BankAccountDto bankAccountDto) {
         try {
             bankAccountService.createBankAccount(bankAccountDto);
@@ -43,7 +44,7 @@ public class BankAccountController {
         }
     }
 
-    @DeleteMapping("/bankAccount/{id}/remove")
+    @DeleteMapping("/remove/{id}")
     public ResponseEntity removeBankAccount(@PathVariable final Long id) {
         try{
             bankAccountService.removeBankAccount(id);

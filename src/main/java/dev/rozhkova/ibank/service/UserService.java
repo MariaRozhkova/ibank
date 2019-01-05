@@ -11,14 +11,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/*import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;*/
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Service
 @AllArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
-    //private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserConverter userConverter;
 
     public UserEntity findByLogin(final String login) {
@@ -26,8 +26,8 @@ public class UserService {
     }
 
     public void create(final UserDto userDto) throws UserException {
-        UserEntity userEntity = userConverter.convertToDbo(userDto);
-        /*userEntity.setPassword(bCryptPasswordEncoder.encode(userEntity.getPassword()));*/
+        final UserEntity userEntity = userConverter.convertToDbo(userDto);
+        userEntity.setPassword(bCryptPasswordEncoder.encode(userEntity.getPassword()));
         userRepository.save(userEntity);
     }
 

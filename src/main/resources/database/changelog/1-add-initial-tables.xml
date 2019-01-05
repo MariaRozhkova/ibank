@@ -38,14 +38,17 @@
                 <constraints nullable="false"/>
             </column>
             <column name="enabled" type="boolean" defaultValueBoolean="true"/>
+            <column name="role" type="varchar(50)" defaultValue="ROLE_USER">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 
     <changeSet id="add_user_info" author="mary">
         <sql>
-            insert into user(first_name, last_name, patronymic, passport_number, email, login, password) values
-            ("James", "Alan", "Hetfield", "HC1235685", "jamesalan@mail.ru", "james_alan", "jalan"),
-            ("Vladzislav", "Jum", "Egorovich", "HB3567812", "vladislavjum@mail.ru", "vladislav_jum", "vjum")
+            insert into user(first_name, last_name, patronymic, passport_number, email, login, password,role) values
+            ("James", "Alan", "Hetfield", "HC1235685", "jamesalan@mail.ru", "user1", "$2a$10$kV5Qx.ZQq6QT4.1Lh1j3qe..SejG/59JW1jv21dptco9p9VWhy3tO", "ROLE_USER"),
+            ("Vladzislav", "Jum", "Egorovich", "HB3567812", "vladislavjum@mail.ru", "admin", "$2a$10$t6GsXPePEzQLGTRPwjYEEegJ7XS67m89j2k49oj.jfiBrEWOQflQa", "ROLE_ADMIN")
         </sql>
     </changeSet>
 

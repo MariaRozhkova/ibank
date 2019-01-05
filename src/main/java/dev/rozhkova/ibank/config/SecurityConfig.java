@@ -2,6 +2,7 @@ package dev.rozhkova.ibank.config;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -19,6 +20,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final MyAppUserDetailsService myAppUserDetailsService;
     private final AppAuthenticationEntryPoint appAuthenticationEntryPoint;
 
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        return bCryptPasswordEncoder;
+    }
+
     @Autowired
     public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
         final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -29,7 +36,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/user/**").hasAnyRole("ADMIN","USER")
+                .antMatchers( "/bank/info").permitAll()
+                .antMatchers("/users/*/bankAccount/list", "/users/*/bankAccount/*",
+                        "/users/*/bankAccount/*/bankCard/list", "/users/*/paymentHistory/list", "/users/*/paymentHistory",
+                        "/users/*/payments/create").hasAnyRole("ADMIN","USER")
+                .antMatchers("/bankAccount/list", "/bankAccount/list", "/bankAccount/remove/*", "/bankCard/list").hasRole("ADMIN")
+                .and().exceptionHandling().accessDeniedPage("/403")
                 .and().httpBasic().realmName("MY APP REALM")
                 .authenticationEntryPoint(appAuthenticationEntryPoint);
     }
