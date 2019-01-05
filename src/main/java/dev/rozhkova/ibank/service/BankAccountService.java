@@ -24,19 +24,19 @@ public class BankAccountService {
     }
 
     public void createBankAccount(final BankAccountDto bankAccountDto) throws UserException {
-        BankAccountEntity bankAccountEntity = bankAccountConverter.convertToDbo(bankAccountDto);
+        final BankAccountEntity bankAccountEntity = bankAccountConverter.convertToDbo(bankAccountDto);
         bankAccountRepository.save(bankAccountEntity);
     }
 
-    public void removeBankAccount(final BankAccountDto bankAccountDto) throws UserException {
-        bankAccountRepository.delete(bankAccountConverter.convertToDbo(bankAccountDto));
+    public void removeBankAccount(final Long id) throws UserException {
+        bankAccountRepository.deleteById(id);
     }
 
-    public List<BankAccountDto> getAllBankAccountByUser(UserEntity user) throws UserException {
-        return bankAccountRepository.findByUser(user).stream().map(bankAccountConverter::convertToDto).collect(Collectors.toList());
+    public List<BankAccountDto> getAllBankAccountByUserId(final Long id) throws UserException {
+        return bankAccountRepository.findByUserId(id).stream().map(bankAccountConverter::convertToDto).collect(Collectors.toList());
     }
 
-    public BankAccountDto getBankAccountByUserAndId(UserEntity user, Long bankAccountId) throws UserException {
-        return bankAccountConverter.convertToDto(bankAccountRepository.findByUserAndId(user, bankAccountId));
+    public BankAccountDto getBankAccountByIdAndUserId(final Long bankAccountId, final Long userId) throws UserException {
+        return bankAccountConverter.convertToDto(bankAccountRepository.findByIdAndUserId(bankAccountId, userId));
     }
 }

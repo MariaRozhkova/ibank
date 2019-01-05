@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 public class PaymentHistoryDto extends BaseDto{
-    private UserDto user;
+    private BankCardDto bankCard;
     private Date dateOperation;
     private Double moneyAmount;
     private String paymentAccount;

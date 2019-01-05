@@ -15,12 +15,15 @@ import java.util.Date;
 @Data
 @Entity
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "payment_history")
 public class PaymentHistoryEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user")
     private UserEntity user;
+    @ManyToOne
+    @JoinColumn(name = "bank_card")
+    private BankCardEntity bankCard;
     @NotNull
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)

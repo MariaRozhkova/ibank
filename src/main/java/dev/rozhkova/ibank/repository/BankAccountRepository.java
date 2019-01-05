@@ -9,6 +9,8 @@ import java.util.List;
 
 @Repository
 public interface BankAccountRepository extends JpaRepository<BankAccountEntity, Long> {
-    List<BankAccountEntity> findByUser(UserEntity user);
-    BankAccountEntity findByUserAndId(UserEntity user, Long id);
+    //List<BankAccountEntity> findByUser(UserEntity user);
+    List<BankAccountEntity> findByUserId(Long id);
+    //BankAccountEntity findByUserAndId(UserEntity user, Long id);
+    BankAccountEntity findByIdAndUserId(Long bankAccountId, Long userId);
 }

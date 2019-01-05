@@ -1,7 +1,5 @@
 package dev.rozhkova.ibank.entity;
-
 import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.rozhkova.ibank.validator.ValidEmail;
 import lombok.Data;
@@ -13,7 +11,7 @@ import java.util.List;
 
 @Data
 @Entity
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Table(name = "user")
 public class UserEntity extends BaseEntity{
@@ -38,11 +36,8 @@ public class UserEntity extends BaseEntity{
   private String password;
   @Column(columnDefinition = "boolean default true")
   private Boolean enabled;
-  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
-  @JsonIgnore
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
   private List<BankAccountEntity> bankAccount;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-  @JsonIgnore
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
   private List<PaymentHistoryEntity> paymentHistory;
-
 }

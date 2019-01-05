@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @Entity
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "bank_account")
 public class BankAccountEntity extends BaseEntity{
   @NotNull
@@ -25,8 +25,7 @@ public class BankAccountEntity extends BaseEntity{
   @ManyToOne
   @JoinColumn(name = "user")
   private UserEntity user;
-  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "bankAccount")
-  @JsonIgnore
-  private List<BankCardEntity> bankCardList;
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "bankAccount")
+  private List<BankCardEntity> bankCardEntity;
   private Boolean enabled;
 }

@@ -37,6 +37,12 @@
                         referencedColumnNames="id"
                         foreignKeyName="user_fk_user_id"/>
             </column>
+            <column name="bank_card" type="int">
+                <constraints
+                        referencedTableName="bank_card"
+                        referencedColumnNames="id"
+                        foreignKeyName="bank_card_fk_bank_card_id"/>
+            </column>
             <column name="date_operation" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
@@ -57,8 +63,8 @@
 
     <changeSet id="add_payment_history_data" author="mary">
         <sql>
-            insert into payment_history(user, money_amount, payment_account, payment_operation) values
-            (1, 24.3, "6278450284453", 3)
+            insert into payment_history(user, bank_card, money_amount, payment_account, payment_operation) values
+            (1, 1, 24.3, "6278450284453", 3)
         </sql>
     </changeSet>
 

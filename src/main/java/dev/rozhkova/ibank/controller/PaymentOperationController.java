@@ -27,7 +27,7 @@ public class PaymentOperationController {
     private final BankAccountConverter bankAccountConverter;
     private final PaymentHistoryService paymentHistoryService;
 
-    @PostMapping("/{userId}/bankAccount/list/{bankAccountId}/payments")
+    /*@PostMapping("/{userId}/bankAccount/list/{bankAccountId}/payments")
     public ResponseEntity makePayment(@PathVariable final Long userId,
                                       @PathVariable final Long bankAccountId,
                                       @RequestBody final PaymentHistoryDto paymentHistoryDto) {
@@ -39,13 +39,13 @@ public class PaymentOperationController {
             bankAccountByIdAndUser.setMoneyAmount(moneyAfterOperation);
             bankAccountService.createBankAccount(bankAccountByIdAndUser);
 
-            paymentHistoryDto.setUser(userDto);
+            //paymentHistoryDto.setUser(userDto);
             System.out.println(paymentHistoryDto.getMoneyAmount());
             paymentHistoryService.create(paymentHistoryDto);
             return new ResponseEntity<>("Payment record created", HttpStatus.CREATED);
         } catch (UserException ex) {
             return new ResponseEntity<>(ex.toString(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+    }*/
 
 }

@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "bank")
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class BankEntity extends BaseEntity {
     @NotNull
     private String name;

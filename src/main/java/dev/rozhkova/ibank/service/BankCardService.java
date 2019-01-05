@@ -31,8 +31,8 @@ public class BankCardService {
         bankCardRepository.delete(bankCardConverter.convertToDbo(bankCardDto));
     }
 
-    public List<BankCardDto> getAllBankCardByBankAccount(BankAccountEntity bankAccount) throws UserException {
-        final List<BankCardEntity> allBankCardByAccount = bankCardRepository.findByBankAccount(bankAccount);
-        return bankCardConverter.convertToDto(new ArrayList<>(allBankCardByAccount));
+    public List<BankCardDto> getAllBankCardByBankAccountId(final Long id) throws UserException{
+        final List<BankCardEntity> bankCardEntities = bankCardRepository.findByBankAccountId(id);
+        return bankCardConverter.convertToDto(bankCardEntities);
     }
 }

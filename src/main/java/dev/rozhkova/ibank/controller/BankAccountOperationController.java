@@ -30,39 +30,35 @@ public class BankAccountOperationController {
     private final BankAccountConverter bankAccountConverter;
 
     @GetMapping("/users/{id}/bankAccount/list")
-    public ResponseEntity getAllBankAccountByUser(@PathVariable final Long id) {
+    public ResponseEntity getAllBankAccountByUserId(@PathVariable final Long id) {
         try{
-            final UserDto userDto = userService.getUserById(id);
-            final List<BankAccountDto> allBankAccountByUser = bankAccountService.getAllBankAccountByUser(userConverter.convertToDbo(userDto));
+            final List<BankAccountDto> allBankAccountByUser = bankAccountService.getAllBankAccountByUserId(id);
             if (allBankAccountByUser != null) {
                 return new ResponseEntity<>(allBankAccountByUser, HttpStatus.FOUND);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-        } catch (UserException ex) {
+        } catch (final UserException ex) {
             return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/users/{userId}/bankAccount/list/{bankAccountId}")
-    public ResponseEntity getAllBankAccountByUserAndId(@PathVariable final Long userId,
-                                                       @PathVariable final Long bankAccountId) {
+    @GetMapping("/users/{userId}/bankAccount/{bankAccountId}")
+    public ResponseEntity getBankAccountByIdAndUserId(@PathVariable final Long bankAccountId,
+                                                      @PathVariable final Long userId) {
         try{
-            final UserDto userDto = userService.getUserById(userId);
-            final BankAccountDto bankAccountByIdAndUser = bankAccountService.getBankAccountByUserAndId(userConverter.convertToDbo(userDto), bankAccountId);
+            final BankAccountDto bankAccountByIdAndUser = bankAccountService.getBankAccountByIdAndUserId(bankAccountId, userId);
             return new ResponseEntity<>(bankAccountByIdAndUser, HttpStatus.FOUND);
-        } catch (UserException ex) {
+        } catch (final UserException ex) {
             return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/users/{userId}/bankAccount/list/{bankAccountId}/bankCard/list")
-    public ResponseEntity getAllBankCardByAccount(@PathVariable final Long userId,
-                                                     @PathVariable final Long bankAccountId) {
+    @GetMapping("/users/{userId}/bankAccount/{bankAccountId}/bankCard/list")
+    public ResponseEntity getAllBankCardByBankAccountId(@PathVariable final Long userId,
+                                                        @PathVariable final Long bankAccountId) {
         try {
-            final UserDto userDto = userService.getUserById(userId);
-            final BankAccountDto bankAccountDto = bankAccountService.getBankAccountByUserAndId(userConverter.convertToDbo(userDto), bankAccountId);
-            final List<BankCardDto> allBankCardByBankAccount = bankCardService.getAllBankCardByBankAccount(bankAccountConverter.convertToDbo(bankAccountDto));
+            final List<BankCardDto> allBankCardByBankAccount = bankCardService.getAllBankCardByBankAccountId(bankAccountId);
             if (allBankCardByBankAccount != null) {
                 return new ResponseEntity<>(allBankCardByBankAccount, HttpStatus.FOUND);
             } else {
@@ -72,5 +68,4 @@ public class BankAccountOperationController {
             return new ResponseEntity<>(ex.toString(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }

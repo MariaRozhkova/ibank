@@ -25,15 +25,14 @@ public class BankCardConverter implements DtoDboConverter<BankCardDto, BankCardE
     }
 
     public List<BankCardDto> convertToDto(final List<BankCardEntity> dbo) {
-        if (dbo != null) {
-            final List<BankCardDto> list = new ArrayList<>();
-            for (final BankCardEntity bankCardEntity : dbo) {
-                final BankCardDto convertToDto = convertToDto(bankCardEntity);
-                list.add(convertToDto);
-            }
-            return list;
-        } else {
-            return null;
-        }
+        final List<BankCardDto> bankCardDtos = new ArrayList<>();
+        dbo.forEach(bankCardEntity -> bankCardDtos.add(convertToDto(bankCardEntity)));
+        return bankCardDtos;
+    }
+
+    public List<BankCardEntity> convertToDbo(final List<BankCardDto> dto) {
+        final List<BankCardEntity> bankCardEntities = new ArrayList<>();
+        dto.forEach(bankCardDto -> bankCardEntities.add(convertToDbo(bankCardDto)));
+        return bankCardEntities;
     }
 }

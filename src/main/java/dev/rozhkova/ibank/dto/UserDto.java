@@ -17,8 +17,6 @@ public class UserDto extends BaseDto{
     private String passportNumber;
     private String email;
     private String login;
-    private String password;
     private Boolean enabled;
     private List<BankAccountDto> bankAccount;
-    private List<PaymentHistoryDto> paymentHistory;
 }

@@ -13,6 +13,5 @@ public class BankCardDto extends BaseDto {
     private String cardHolderName;
     private String date;
     private int cvv;
-    private BankAccountEntity bankAccount;
     private Boolean enabled;
 }
