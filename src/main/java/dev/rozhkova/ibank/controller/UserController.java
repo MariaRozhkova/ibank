@@ -1,6 +1,7 @@
 package dev.rozhkova.ibank.controller;
 
 import dev.rozhkova.ibank.dto.UserDto;
+import dev.rozhkova.ibank.entity.UserEntity;
 import dev.rozhkova.ibank.exception.UserException;
 import dev.rozhkova.ibank.service.UserService;
 import lombok.AllArgsConstructor;
@@ -33,9 +34,9 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity createUser(@RequestBody final UserDto userDto) {
+    public ResponseEntity createUser(@RequestBody final UserEntity userEntity) {
         try {
-            userService.create(userDto);
+            userService.create(userEntity);
             return new ResponseEntity<>("User created", HttpStatus.CREATED);
         } catch (final UserException ex) {
             return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);

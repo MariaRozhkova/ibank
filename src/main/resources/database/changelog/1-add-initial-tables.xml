@@ -38,9 +38,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="enabled" type="boolean" defaultValueBoolean="true"/>
-            <column name="role" type="varchar(50)" defaultValue="ROLE_USER">
-                <constraints nullable="false"/>
-            </column>
+            <column name="role" type="varchar(50)" defaultValue="ROLE_USER"/>
         </createTable>
     </changeSet>
 

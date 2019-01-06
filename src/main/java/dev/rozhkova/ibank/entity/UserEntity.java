@@ -34,12 +34,12 @@ public class UserEntity extends BaseEntity{
   private String login;
   @NotNull
   private String password;
-  @Column(columnDefinition = "boolean default true")
+  @Column(name = "enabled", columnDefinition = "boolean default true")
   private Boolean enabled;
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
   private List<BankAccountEntity> bankAccount;
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
   private List<PaymentHistoryEntity> paymentHistory;
-  @Column(columnDefinition = "varchar(50) default ROLE_USER")
+  @Column(name = "role", columnDefinition = "varchar(50) default ROLE_USER")
   private String role;
 }

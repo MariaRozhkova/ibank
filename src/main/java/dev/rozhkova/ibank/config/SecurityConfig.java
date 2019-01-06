@@ -36,11 +36,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers( "/bank/info").permitAll()
+                .antMatchers( "/bank/info", "/users/create").permitAll()
                 .antMatchers("/users/*/bankAccount/list", "/users/*/bankAccount/*",
                         "/users/*/bankAccount/*/bankCard/list", "/users/*/paymentHistory/list", "/users/*/paymentHistory",
                         "/users/*/payments/create").hasAnyRole("ADMIN","USER")
-                .antMatchers("/bankAccount/list", "/bankAccount/list", "/bankAccount/remove/*", "/bankCard/list").hasRole("ADMIN")
+                .antMatchers("/bankAccount/list", "/bankAccount/list", "/bankAccount/remove/*", "/bankCard/list",
+                        "/users/list").hasRole("ADMIN")
                 .and().exceptionHandling().accessDeniedPage("/403")
                 .and().httpBasic().realmName("MY APP REALM")
                 .authenticationEntryPoint(appAuthenticationEntryPoint);
