@@ -3,6 +3,7 @@ package dev.rozhkova.ibank.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -22,7 +23,11 @@ public class BankAccountEntity extends BaseEntity{
   private Double moneyAmount;
   @ManyToOne
   @JoinColumn(name = "user")
+  @EqualsAndHashCode.Exclude
+  @ToString.Exclude
   private UserEntity user;
+  @EqualsAndHashCode.Exclude
+  @ToString.Exclude
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "bankAccount")
   private List<BankCardEntity> bankCardEntity;
   private Boolean enabled;

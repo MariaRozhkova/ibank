@@ -3,6 +3,7 @@ package dev.rozhkova.ibank.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -16,9 +17,13 @@ import java.util.Date;
 @Table(name = "payment_history")
 public class PaymentHistoryEntity extends BaseEntity {
     @ManyToOne
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @JoinColumn(name = "user")
     private UserEntity user;
     @ManyToOne
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @JoinColumn(name = "bank_card")
     private BankCardEntity bankCard;
     @CreationTimestamp
@@ -33,6 +38,8 @@ public class PaymentHistoryEntity extends BaseEntity {
     //@Fetch(value = FetchMode.SUBSELECT)
     private String paymentAccount;
     @ManyToOne
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @JoinColumn(name = "payment_operation")
     private PaymentOperationEntity paymentOperation;
 }
