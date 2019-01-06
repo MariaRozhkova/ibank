@@ -4,6 +4,7 @@ import dev.rozhkova.ibank.validator.ValidEmail;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -38,8 +39,12 @@ public class UserEntity extends BaseEntity{
   @Column(name = "enabled", columnDefinition = "boolean default true")
   private Boolean enabled;
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
+  @EqualsAndHashCode.Exclude
+  @ToString.Exclude
   private List<BankAccountEntity> bankAccount;
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "user")
+  @EqualsAndHashCode.Exclude
+  @ToString.Exclude
   private List<PaymentHistoryEntity> paymentHistory;
   @Column(name = "role", columnDefinition = "varchar(50) default ROLE_USER")
   private String role;

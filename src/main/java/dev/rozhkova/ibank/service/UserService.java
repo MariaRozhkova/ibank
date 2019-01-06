@@ -26,7 +26,7 @@ public class UserService {
     }
 
     public void create(final UserEntity userEntity) throws UserException {
-        userEntity.setPassword(bCryptPasswordEncoder.encode(userEntity.getPassword()));
+        //userEntity.setPassword(bCryptPasswordEncoder.encode("mary"));
         userEntity.setRole("ROLE_USER");
         userEntity.setEnabled(true);
         userRepository.save(userEntity);
