@@ -59,11 +59,14 @@ public class PaymentHistoryController {
             final BankAccountEntity bankAccountEntity = bankCardService.getBankAccountByCardNumber(paymentHistoryDto.getBankCard().getCardNumber());
             final Double moneyOnAccount = bankAccountEntity.getMoneyAmount();
             final Double moneyAfterOperation = moneyOnAccount - paymentHistoryDto.getMoneyAmount();
-
-            bankAccountService.updateMoneyAmount(moneyAfterOperation, bankAccountEntity.getId());
-            final UserEntity userEntity = userService.getUserEntityById(userId);
-            paymentHistoryService.makePayment(userEntity, paymentHistoryDto);
-            return new ResponseEntity<>("Payment record created", HttpStatus.CREATED);
+            if (moneyOnAccount >= 0 & moneyAfterOperation >= 0) {
+                bankAccountService.updateMoneyAmount(moneyAfterOperation, bankAccountEntity.getId());
+                final UserEntity userEntity = userService.getUserEntityById(userId);
+                paymentHistoryService.makePayment(userEntity, paymentHistoryDto);
+                return new ResponseEntity<>("Payment record created", HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<>("Insufficient funds", HttpStatus.CREATED);
+            }
         } catch (final UserException ex) {
             return new ResponseEntity<>(ex.toString(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
