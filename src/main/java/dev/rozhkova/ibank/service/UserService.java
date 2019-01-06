@@ -26,7 +26,6 @@ public class UserService {
     }
 
     public void create(final UserEntity userEntity) throws UserException {
-        //final UserEntity userEntity = userConverter.convertToDbo(userDto);
         userEntity.setPassword(bCryptPasswordEncoder.encode(userEntity.getPassword()));
         userEntity.setRole("ROLE_USER");
         userEntity.setEnabled(true);
