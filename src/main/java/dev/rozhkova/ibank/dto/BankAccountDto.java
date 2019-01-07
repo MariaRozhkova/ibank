@@ -10,6 +10,6 @@ import java.util.List;
 public class BankAccountDto {
     private String accountNumber;
     private Double moneyAmount;
-    private List<BankCardDto> bankCardEntity;
+    private List<BankCardDto> bankCardDtos;
     private Boolean enabled;
 }

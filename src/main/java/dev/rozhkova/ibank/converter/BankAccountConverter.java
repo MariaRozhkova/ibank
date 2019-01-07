@@ -1,10 +1,11 @@
 package dev.rozhkova.ibank.converter;
+
 import dev.rozhkova.ibank.dto.BankAccountDto;
 import dev.rozhkova.ibank.dto.BankCardDto;
 import dev.rozhkova.ibank.entity.BankAccountEntity;
-import dev.rozhkova.ibank.entity.BankCardEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class BankAccountConverter implements DtoDboConverter<BankAccountDto, Ban
         final List<BankCardDto> bankCardDtos = bankCardConverter.convertToDto(dbo.getBankCardEntity());
         bankAccountDto.setMoneyAmount(dbo.getMoneyAmount());
         bankAccountDto.setAccountNumber(dbo.getAccountNumber());
-        bankAccountDto.setBankCardEntity(bankCardDtos);
+        bankAccountDto.setBankCardDtos(bankCardDtos);
         bankAccountDto.setEnabled(dbo.getEnabled());
         return bankAccountDto;
     }
@@ -32,10 +33,8 @@ public class BankAccountConverter implements DtoDboConverter<BankAccountDto, Ban
     @Override
     public BankAccountEntity convertToDbo(final BankAccountDto dto) {
         final BankAccountEntity bankAccountEntity = new BankAccountEntity();
-        final List<BankCardEntity> bankCardEntities = bankCardConverter.convertToDbo(dto.getBankCardEntity());
         bankAccountEntity.setMoneyAmount(dto.getMoneyAmount());
         bankAccountEntity.setAccountNumber(dto.getAccountNumber());
-        bankAccountEntity.setBankCardEntity(bankCardEntities);
         bankAccountEntity.setEnabled(dto.getEnabled());
         return bankAccountEntity;
     }

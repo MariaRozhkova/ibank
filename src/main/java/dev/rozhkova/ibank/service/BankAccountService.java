@@ -22,6 +22,7 @@ public class BankAccountService {
     }
 
     public void createBankAccount(final BankAccountDto bankAccountDto) throws UserException {
+        bankAccountConverter.convertToDbo(bankAccountDto);
         final BankAccountEntity bankAccountEntity = bankAccountConverter.convertToDbo(bankAccountDto);
         bankAccountRepository.save(bankAccountEntity);
     }
