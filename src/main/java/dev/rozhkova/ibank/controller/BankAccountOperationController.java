@@ -4,6 +4,7 @@ import dev.rozhkova.ibank.converter.BankAccountConverter;
 import dev.rozhkova.ibank.converter.UserConverter;
 import dev.rozhkova.ibank.dto.BankAccountDto;
 import dev.rozhkova.ibank.dto.BankCardDto;
+import dev.rozhkova.ibank.entity.UserEntity;
 import dev.rozhkova.ibank.exception.UserException;
 import dev.rozhkova.ibank.service.BankAccountService;
 import dev.rozhkova.ibank.service.BankCardService;
@@ -22,6 +23,7 @@ import java.util.List;
 public class BankAccountOperationController {
     private final BankAccountService bankAccountService;
     private final BankCardService bankCardService;
+    private final UserService userService;
 
     @GetMapping("/users/{id}/bankAccount/list")
     public ResponseEntity getAllBankAccountByUserId(@PathVariable final Long id) {
@@ -60,6 +62,40 @@ public class BankAccountOperationController {
             }
         } catch (final UserException ex) {
             return new ResponseEntity<>(ex.toString(),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * this method lock bank account of user if exists
+     *
+     * @param id        - user id
+     * @param accountId - bank account id
+      */
+    @GetMapping("/users/{id}/bankAccount/{accountId}/lock")
+    public ResponseEntity<String> lockBankAccountByUserAndId(@PathVariable("id") final Long id, @PathVariable("accountId") final Long accountId) {
+        try {
+            final UserEntity user = userService.getUserEntityById(id);
+            bankAccountService.lockBankAccountByUserAndId(user, accountId);
+            return new ResponseEntity<>("Account has been locked successfully!", HttpStatus.FOUND);
+        } catch (final UserException ex) {
+            return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * this method unlock bank account of user if exists
+     *
+     * @param id        - user id
+     * @param accountId - bank account id
+     */
+    @GetMapping("/users/{id}/bankAccount/{accountId}/unlock")
+    public ResponseEntity<String> unlockBankAccountByUserAndId(@PathVariable("id") final Long id, @PathVariable("accountId") final Long accountId) {
+        try {
+            final UserEntity user = userService.getUserEntityById(id);
+            bankAccountService.unlockBankAccountByUserAndId(user, accountId);
+            return new ResponseEntity<>("Account has been unlocked successfully!", HttpStatus.FOUND);
+        } catch (final UserException ex) {
+            return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class BankConverter implements DtoDboConverter<BankDto, BankEntity> {
     @Override
-    public BankDto convertToDto(BankEntity dbo) {
+    public BankDto convertToDto(final BankEntity dbo) {
         final BankDto bankDto = new BankDto();
         BeanUtils.copyProperties(dbo, bankDto);
         return bankDto;
     }
 
     @Override
-    public BankEntity convertToDbo(BankDto dto) {
+    public BankEntity convertToDbo(final BankDto dto) {
         final BankEntity bankEntity = new BankEntity();
         BeanUtils.copyProperties(dto, bankEntity);
         return bankEntity;

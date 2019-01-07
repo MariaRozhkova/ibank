@@ -23,7 +23,7 @@ public class MockDataUser {
         userEntity.setEnabled(true);
         userEntity.setRole("ROLE_USER");
         final BankAccountEntity bankAccountEntity = MockDataBankAccount.bankAccountEntity();
-        List<BankAccountEntity> bankAccountEntities = new ArrayList<>();
+        final List<BankAccountEntity> bankAccountEntities = new ArrayList<>();
         bankAccountEntities.add(bankAccountEntity);
         userEntity.setBankAccount(bankAccountEntities);
         return userEntity;
@@ -39,8 +39,8 @@ public class MockDataUser {
         userDto.setEmail("jamesalan@mail.ru");
         userDto.setLogin("user1");
         userDto.setEnabled(true);
-        BankAccountDto bankAccountDto = MockDataBankAccount.bankAccountDto();
-        List<BankAccountDto> bankAccountDtos = new ArrayList<>();
+        final BankAccountDto bankAccountDto = MockDataBankAccount.bankAccountDto();
+        final List<BankAccountDto> bankAccountDtos = new ArrayList<>();
         bankAccountDtos.add(bankAccountDto);
         userDto.setBankAccount(bankAccountDtos);
         return userDto;

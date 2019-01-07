@@ -1,5 +1,6 @@
 package dev.rozhkova.ibank.entity;
 
+import dev.rozhkova.ibank.utils.DateUtility;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -7,13 +8,14 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "bank_card")
 @NoArgsConstructor
+@Table(name = "bank_card")
 public class BankCardEntity extends BaseEntity {
     @NotNull
     @Column(name = "card_number")
@@ -38,4 +40,20 @@ public class BankCardEntity extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "bankCard")
     private List<PaymentHistoryEntity> paymentHistory;
 
+    public boolean getEnabled() {
+        final LocalDate cardDate = DateUtility.parse(date);
+        if (cardDate == null || cardDate.isBefore((LocalDate.now()))) {
+            enabled = false;
+        }
+        return enabled;
+    }
+
+    public void setEnabled(final boolean enabled) {
+        final LocalDate cardDate = DateUtility.parse(date);
+        if (cardDate == null || cardDate.isBefore((LocalDate.now()))) {
+            this.enabled = false;
+        } else {
+            this.enabled = enabled;
+        }
+    }
 }

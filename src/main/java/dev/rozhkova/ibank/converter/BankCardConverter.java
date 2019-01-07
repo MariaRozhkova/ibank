@@ -20,7 +20,11 @@ public class BankCardConverter implements DtoDboConverter<BankCardDto, BankCardE
     @Override
     public BankCardEntity convertToDbo(final BankCardDto dto) {
         final BankCardEntity bankCardEntity = new BankCardEntity();
-        BeanUtils.copyProperties(dto, bankCardEntity);
+        //BeanUtils.copyProperties(dto, bankCardEntity);
+        bankCardEntity.setCardNumber(dto.getCardNumber());
+        bankCardEntity.setCardHolderName(dto.getCardHolderName());
+        bankCardEntity.setDate(dto.getDate());
+        bankCardEntity.setCvv(dto.getCvv());
         return bankCardEntity;
     }
 

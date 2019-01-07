@@ -35,7 +35,6 @@ public class PaymentHistoryEntity extends BaseEntity {
     private Double moneyAmount;
     @NotNull
     @Column(name = "payment_account")
-    //@Fetch(value = FetchMode.SUBSELECT)
     private String paymentAccount;
     @ManyToOne
     @EqualsAndHashCode.Exclude

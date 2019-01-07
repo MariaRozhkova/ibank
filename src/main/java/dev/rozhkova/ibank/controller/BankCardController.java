@@ -23,7 +23,7 @@ public class BankCardController {
         try {
             bankCardService.createBankCard(bankCardDto);
             return new ResponseEntity<>("Bank card created", HttpStatus.CREATED);
-        } catch (UserException ex) {
+        } catch (final UserException ex) {
             return new ResponseEntity<>(ex.toString(), INTERNAL_SERVER_ERROR);
         }
     }
@@ -37,7 +37,7 @@ public class BankCardController {
             } else {
                 return new ResponseEntity(NOT_FOUND);
             }
-        } catch (UserException ex) {
+        } catch (final UserException ex) {
             return new ResponseEntity<>(ex.toString(), INTERNAL_SERVER_ERROR);
         }
 
@@ -48,9 +48,28 @@ public class BankCardController {
         try {
             bankCardService.removeBankCard(bankCardDto);
             return new ResponseEntity<>("Bank Card removed", OK);
-        } catch (UserException ex) {
+        } catch (final UserException ex) {
             return new ResponseEntity<>(ex.toString(), INTERNAL_SERVER_ERROR);
         }
     }
 
+    @PutMapping("/lock/{id}")
+    public ResponseEntity lockBankCard(@PathVariable("id") final Long id) {
+        try {
+            bankCardService.lockCardById(id);
+            return new ResponseEntity<>("Bank card has been locked", OK);
+        } catch (final UserException ex) {
+            return new ResponseEntity<>(ex.toString(), INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/unlock/{id}")
+    public ResponseEntity unlockBankCard(@PathVariable("id") final Long id) {
+        try {
+            bankCardService.unlockCardById(id);
+            return new ResponseEntity<>("Bank card has been locked", OK);
+        } catch (final UserException ex) {
+            return new ResponseEntity<>(ex.toString(), INTERNAL_SERVER_ERROR);
+        }
+    }
 }

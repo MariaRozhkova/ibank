@@ -3,8 +3,8 @@ package dev.rozhkova.ibank.controller;
 import dev.rozhkova.ibank.dto.UserDto;
 import dev.rozhkova.ibank.entity.UserEntity;
 import dev.rozhkova.ibank.exception.UserException;
+import dev.rozhkova.ibank.service.BankAccountService;
 import dev.rozhkova.ibank.service.UserService;
-import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +18,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final BankAccountService bankAccountService;
 
     @GetMapping("/list")
     public ResponseEntity getAllUsers() {
@@ -28,10 +29,9 @@ public class UserController {
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-        } catch (final UserException ex) {
+        } catch (UserException ex) {
             return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
     @PostMapping("/create")
@@ -67,6 +67,35 @@ public class UserController {
             return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/lockUser/{id}")
+    public ResponseEntity<String> lockUserAccounts(@PathVariable final Long id) {
+        UserEntity user;
+        try {
+            user = userService.getUserEntityById(id);
+            user.setEnabled(false);
+            userService.create(user);
+            bankAccountService.lockAllBankAccountEntityByUser(user);
+            return new ResponseEntity<>("Accounts has been locked successfully", HttpStatus.OK);
+        } catch (UserException e) {
+            return new ResponseEntity<>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/unlockUser/{id}")
+    public ResponseEntity<String> unlockUserAccounts(@PathVariable final Long id) {
+        UserEntity user;
+        try {
+            user = userService.getUserEntityById(id);
+            user.setEnabled(true);
+            userService.create(user);
+            bankAccountService.unlockAllBankAccountEntityByUser(user);
+            return new ResponseEntity<>("Accounts has been unlocked successfully", HttpStatus.OK);
+        } catch (UserException e) {
+            return new ResponseEntity<>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     @PutMapping(value = "/{id}/update")
     public ResponseEntity updateUser(@PathVariable final Long id, @RequestBody final UserDto userAfterUpdate) {

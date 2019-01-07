@@ -26,5 +26,4 @@ public class BankController {
             return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }
