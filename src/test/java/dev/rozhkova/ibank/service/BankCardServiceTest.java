@@ -1,17 +1,12 @@
 package dev.rozhkova.ibank.service;
 
 import dev.rozhkova.ibank.converter.BankCardConverter;
-import dev.rozhkova.ibank.converter.UserConverter;
 import dev.rozhkova.ibank.dto.BankCardDto;
-import dev.rozhkova.ibank.dto.UserDto;
 import dev.rozhkova.ibank.entity.BankAccountEntity;
 import dev.rozhkova.ibank.entity.BankCardEntity;
-import dev.rozhkova.ibank.entity.UserEntity;
 import dev.rozhkova.ibank.exception.UserException;
 import dev.rozhkova.ibank.mock.MockDataBankCard;
-import dev.rozhkova.ibank.mock.MockDataUser;
 import dev.rozhkova.ibank.repository.BankCardRepository;
-import dev.rozhkova.ibank.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -22,7 +17,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)

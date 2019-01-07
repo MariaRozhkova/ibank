@@ -11,14 +11,14 @@ import java.util.List;
 @Service
 public class BankCardConverter implements DtoDboConverter<BankCardDto, BankCardEntity> {
     @Override
-    public BankCardDto convertToDto(BankCardEntity dbo) {
+    public BankCardDto convertToDto(final BankCardEntity dbo) {
         final BankCardDto bankCardDto = new BankCardDto();
         BeanUtils.copyProperties(dbo, bankCardDto);
         return bankCardDto;
     }
 
     @Override
-    public BankCardEntity convertToDbo(BankCardDto dto) {
+    public BankCardEntity convertToDbo(final BankCardDto dto) {
         final BankCardEntity bankCardEntity = new BankCardEntity();
         BeanUtils.copyProperties(dto, bankCardEntity);
         return bankCardEntity;
