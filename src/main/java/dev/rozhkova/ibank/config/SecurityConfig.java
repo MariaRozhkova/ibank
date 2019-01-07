@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users/*/bankAccount/list", "/users/*/bankAccount/*",
                         "/users/*/bankAccount/*/bankCard/list", "/users/*/paymentHistory/list", "/users/*/paymentHistory",
                         "/users/*/payments/create").hasAnyRole("ADMIN","USER")
-                .antMatchers("/bankAccount/list", "/bankAccount/list", "/bankAccount/remove/*", "/bankCard/list",
+                .antMatchers("/bankAccount/create", "/bankAccount/list", "/bankAccount/list", "/bankAccount/remove/*", "/bankCard/list",
                         "/users/list").hasRole("ADMIN")
                 .and().exceptionHandling().accessDeniedPage("/403")
                 .and().httpBasic().realmName("MY APP REALM")
