@@ -6,12 +6,11 @@ import dev.rozhkova.ibank.entity.UserEntity;
 import dev.rozhkova.ibank.exception.UserException;
 import dev.rozhkova.ibank.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Service
 @AllArgsConstructor
@@ -26,7 +25,7 @@ public class UserService {
     }
 
     public void create(final UserEntity userEntity) throws UserException {
-        //userEntity.setPassword(bCryptPasswordEncoder.encode("mary"));
+        userEntity.setPassword(bCryptPasswordEncoder.encode("jgf"));
         userEntity.setRole("ROLE_USER");
         userEntity.setEnabled(true);
         userRepository.save(userEntity);

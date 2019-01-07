@@ -11,8 +11,10 @@ import java.util.List;
 public class MockDataBankAccount {
     public static BankAccountEntity bankAccountEntity() {
         final BankAccountEntity bankAccountEntity = new BankAccountEntity();
-        final List<BankCardEntity> bankCardEntity = new ArrayList<>();
-        bankAccountEntity.setBankCardEntity(bankCardEntity);
+        final BankCardEntity bankCardEntity = MockDataBankCard.bankCardEntity();
+        final List<BankCardEntity> bankCardEntities = new ArrayList<>();
+        bankCardEntities.add(bankCardEntity);
+        bankAccountEntity.setBankCardEntity(bankCardEntities);
         bankAccountEntity.setId(1L);
         bankAccountEntity.setAccountNumber("478134978234");
         bankAccountEntity.setMoneyAmount(320d);

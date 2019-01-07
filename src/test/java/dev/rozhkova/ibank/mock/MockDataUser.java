@@ -1,8 +1,8 @@
 package dev.rozhkova.ibank.mock;
 
+import dev.rozhkova.ibank.dto.BankAccountDto;
 import dev.rozhkova.ibank.dto.UserDto;
 import dev.rozhkova.ibank.entity.BankAccountEntity;
-import dev.rozhkova.ibank.entity.PaymentHistoryEntity;
 import dev.rozhkova.ibank.entity.UserEntity;
 
 import java.util.ArrayList;
@@ -22,10 +22,10 @@ public class MockDataUser {
         userEntity.setPassword("user1");
         userEntity.setEnabled(true);
         userEntity.setRole("ROLE_USER");
-        final List<BankAccountEntity> bankAccountEntities = new ArrayList<>();
+        final BankAccountEntity bankAccountEntity = MockDataBankAccount.bankAccountEntity();
+        List<BankAccountEntity> bankAccountEntities = new ArrayList<>();
+        bankAccountEntities.add(bankAccountEntity);
         userEntity.setBankAccount(bankAccountEntities);
-        final List<PaymentHistoryEntity> paymentHistoryEntities = new ArrayList<>();
-        userEntity.setPaymentHistory(paymentHistoryEntities);
         return userEntity;
     }
 
@@ -39,6 +39,10 @@ public class MockDataUser {
         userDto.setEmail("jamesalan@mail.ru");
         userDto.setLogin("user1");
         userDto.setEnabled(true);
+        BankAccountDto bankAccountDto = MockDataBankAccount.bankAccountDto();
+        List<BankAccountDto> bankAccountDtos = new ArrayList<>();
+        bankAccountDtos.add(bankAccountDto);
+        userDto.setBankAccount(bankAccountDtos);
         return userDto;
     }
 }
