@@ -26,7 +26,7 @@ public class MockDataBankAccount {
         bankAccountDto.setMoneyAmount(320d);
         bankAccountDto.setEnabled(true);
         final List<BankCardDto> bankCardDtos = new ArrayList<>();
-        bankAccountDto.setBankCardEntity(bankCardDtos);
+        bankAccountDto.setBankCardDtos(bankCardDtos);
         return bankAccountDto;
     }
 }
