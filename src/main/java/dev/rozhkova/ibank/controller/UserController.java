@@ -4,6 +4,7 @@ import dev.rozhkova.ibank.dto.UserDto;
 import dev.rozhkova.ibank.entity.UserEntity;
 import dev.rozhkova.ibank.exception.UserException;
 import dev.rozhkova.ibank.service.UserService;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
