@@ -20,9 +20,6 @@ import java.util.List;
 public class PaymentHistoryController {
 
     private final PaymentHistoryService paymentHistoryService;
-    private final BankAccountService bankAccountService;
-    private final BankCardService bankCardService;
-    private final UserService userService;
 
     @GetMapping("/users/{id}/paymentHistory/list")
     public ResponseEntity getAllPaymentHistoryByUserId(@PathVariable final Long id) {
@@ -56,19 +53,13 @@ public class PaymentHistoryController {
     public ResponseEntity makePayment(@PathVariable final Long userId,
                                       @RequestBody final PaymentHistoryDto paymentHistoryDto) {
         try {
-            final BankAccountEntity bankAccountEntity = bankCardService.getBankAccountByCardNumber(paymentHistoryDto.getBankCard().getCardNumber());
-            final Double moneyOnAccount = bankAccountEntity.getMoneyAmount();
-            final Double moneyAfterOperation = moneyOnAccount - paymentHistoryDto.getMoneyAmount();
-            if (moneyOnAccount >= 0 & moneyAfterOperation >= 0) {
-                bankAccountService.updateMoneyAmount(moneyAfterOperation, bankAccountEntity.getId());
-                final UserEntity userEntity = userService.getUserEntityById(userId);
-                paymentHistoryService.makePayment(userEntity, paymentHistoryDto);
+            if (paymentHistoryService.makePayment(userId, paymentHistoryDto)) {
                 return new ResponseEntity<>("Payment record created", HttpStatus.CREATED);
             } else {
                 return new ResponseEntity<>("Insufficient funds", HttpStatus.CREATED);
             }
         } catch (final UserException ex) {
-            return new ResponseEntity<>(ex.toString(),HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
