@@ -9,6 +9,7 @@ import dev.rozhkova.ibank.repository.BankCardRepository;
 import dev.rozhkova.ibank.utils.DateUtility;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class BankCardService {
     private final BankCardRepository bankCardRepository;
     private final BankCardConverter bankCardConverter;

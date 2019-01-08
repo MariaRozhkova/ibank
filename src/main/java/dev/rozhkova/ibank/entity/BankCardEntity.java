@@ -37,7 +37,7 @@ public class BankCardEntity extends BaseEntity {
     private Boolean enabled;
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "bankCard")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "bankCard")
     private List<PaymentHistoryEntity> paymentHistory;
 
     public boolean getEnabled() {
