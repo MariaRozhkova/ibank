@@ -14,6 +14,7 @@ import java.util.List;
 @RequestMapping("/users")
 @AllArgsConstructor
 public class UserController {
+
     private final UserService userService;
 
     @GetMapping("/list")
@@ -25,7 +26,7 @@ public class UserController {
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-        } catch (UserException ex) {
+        } catch (final UserException ex) {
             return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -36,7 +37,7 @@ public class UserController {
         try {
             userService.create(userDto);
             return new ResponseEntity<>("User created", HttpStatus.CREATED);
-        } catch (UserException ex) {
+        } catch (final UserException ex) {
             return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -44,34 +45,34 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity getUser(@PathVariable final Long id) {
         try {
-            UserDto user = userService.getUserById(id);
+            final UserDto user = userService.getUserById(id);
             if (user != null) {
                 return new ResponseEntity<>(user, HttpStatus.FOUND);
             } else {
                 return new ResponseEntity(HttpStatus.NOT_FOUND);
             }
-        } catch (UserException ex) {
+        } catch (final UserException ex) {
             return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @DeleteMapping("/remove")
-    public ResponseEntity removeUser(@RequestBody final UserDto userDto) {
+    @DeleteMapping("/{id}/remove")
+    public ResponseEntity removeUser(@PathVariable final Long id) {
         try {
-            userService.removeUser(userDto);
-            return new ResponseEntity("User removed", HttpStatus.OK);
-        } catch (UserException ex) {
+            userService.removeUser(id);
+            return new ResponseEntity<>("User removed", HttpStatus.OK);
+        } catch (final UserException ex) {
             return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping(value = "/{id}/update")
-    public ResponseEntity updateUser(@PathVariable Long id, @RequestBody UserDto userAfterUpdate) {
+    public ResponseEntity updateUser(@PathVariable final Long id, @RequestBody final UserDto userAfterUpdate) {
         try {
             userService.updateUser(id, userAfterUpdate);
-            return new ResponseEntity("User updated", HttpStatus.OK);
-        } catch (UserException ex) {
-            return new ResponseEntity(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("User updated", HttpStatus.OK);
+        } catch (final UserException ex) {
+            return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

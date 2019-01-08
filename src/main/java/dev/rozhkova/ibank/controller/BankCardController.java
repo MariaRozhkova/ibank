@@ -14,7 +14,7 @@ import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/bank_card")
+@RequestMapping("/bankCard")
 public class BankCardController {
     private final BankCardService bankCardService;
 

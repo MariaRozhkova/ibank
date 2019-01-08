@@ -1,17 +1,16 @@
 package dev.rozhkova.ibank.dto;
 
-import dev.rozhkova.ibank.entity.PaymentOperationEntity;
-import dev.rozhkova.ibank.entity.UserEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class PaymentHistoryDto extends BaseDto{
-    private UserDto user;
+    private BankCardDto bankCard;
     private Date dateOperation;
     private Double moneyAmount;
     private String paymentAccount;

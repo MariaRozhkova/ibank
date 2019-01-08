@@ -1,73 +1,46 @@
 package dev.rozhkova.ibank.converter;
 
-import dev.rozhkova.ibank.dto.PaymentOperationDto;
 import dev.rozhkova.ibank.dto.SavedPaymentDto;
-import dev.rozhkova.ibank.dto.UserDto;
-import dev.rozhkova.ibank.entity.PaymentOperationEntity;
 import dev.rozhkova.ibank.entity.SavedPaymentEntity;
-import dev.rozhkova.ibank.entity.UserEntity;
-import org.springframework.beans.BeanUtils;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 public class SavedPaymentConverter implements DtoDboConverter<SavedPaymentDto, SavedPaymentEntity>{
-    /*private final UserConverter userConverter;
+
+    private final BankCardConverter bankCardConverter;
     private final PaymentOperationConverter paymentOperationConverter;
 
     @Autowired
-    public SavedPaymentConverter(final UserConverter userConverter,
-                                 final PaymentOperationConverter paymentOperationConverter) {
-        this.userConverter = userConverter;
+    public SavedPaymentConverter(final BankCardConverter bankCardConverter, final PaymentOperationConverter paymentOperationConverter) {
+        this.bankCardConverter = bankCardConverter;
         this.paymentOperationConverter = paymentOperationConverter;
-    }*/
+    }
 
     @Override
     public SavedPaymentDto convertToDto(SavedPaymentEntity dbo) {
         final SavedPaymentDto savedPaymentDto = new SavedPaymentDto();
-        BeanUtils.copyProperties(dbo, savedPaymentDto);
-        /*
-        UserDto userDto = userConverter.convertToDto(dbo.getUser());
-        PaymentOperationDto paymentOperationDto =
-                paymentOperationConverter.convertToDto(dbo.getPaymentOperation());
 
-        savedPaymentDto.setUser(userDto);
+        savedPaymentDto.setId(dbo.getId());
+        savedPaymentDto.setBankCard(bankCardConverter.convertToDto(dbo.getBankCard()));
         savedPaymentDto.setMoneyAmount(dbo.getMoneyAmount());
         savedPaymentDto.setPaymentAccount(dbo.getPaymentAccount());
-        savedPaymentDto.setPaymentOperation(paymentOperationDto);
-*/
+        savedPaymentDto.setPaymentOperation(paymentOperationConverter.convertToDto(dbo.getPaymentOperation()));
+
         return savedPaymentDto;
     }
 
     @Override
     public SavedPaymentEntity convertToDbo(SavedPaymentDto dto) {
         final SavedPaymentEntity savedPaymentEntity = new SavedPaymentEntity();
-        BeanUtils.copyProperties(dto, savedPaymentEntity);
-        /*
-        UserEntity userEntity = userConverter.convertToDbo(dto.getUser());
-        PaymentOperationEntity paymentOperationEntity =
-                paymentOperationConverter.convertToDbo(dto.getPaymentOperation());
 
-        savedPaymentEntity.setUser(userEntity);
+        savedPaymentEntity.setId(dto.getId());
+        savedPaymentEntity.setBankCard(bankCardConverter.convertToDbo(dto.getBankCard()));
         savedPaymentEntity.setMoneyAmount(dto.getMoneyAmount());
         savedPaymentEntity.setPaymentAccount(dto.getPaymentAccount());
-        savedPaymentEntity.setPaymentOperation(paymentOperationEntity);
-*/
+        savedPaymentEntity.setPaymentOperation(paymentOperationConverter.convertToDbo(dto.getPaymentOperation()));
+
         return savedPaymentEntity;
-    }
-
-    public List<SavedPaymentDto> convertToDto(final List<SavedPaymentEntity> dbo) {
-        final List<SavedPaymentDto> savedPaymentDtos = new ArrayList<>();
-        dbo.forEach(savedPaymentEntity -> savedPaymentDtos.add(convertToDto(savedPaymentEntity)));
-        return savedPaymentDtos;
-    }
-
-    public List<SavedPaymentEntity> convertToDbo(final List<SavedPaymentDto> dto) {
-        final List<SavedPaymentEntity> savedPaymentEntities = new ArrayList<>();
-        dto.forEach(savedPaymentDto -> savedPaymentEntities.add(convertToDbo(savedPaymentDto)));
-        return savedPaymentEntities;
     }
 }

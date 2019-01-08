@@ -13,12 +13,13 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
+@RequestMapping("/bankAccount")
 @AllArgsConstructor
-/*@RequestMapping("/bank_account")*/
 public class BankAccountController {
+
     private final BankAccountService bankAccountService;
 
-    @GetMapping("/bank_account/list")
+    @GetMapping("/list")
     public ResponseEntity getAllBankAccount() {
         try {
             final List<BankAccountDto> allBankAccount = bankAccountService.getAllBankAccount();
@@ -27,28 +28,28 @@ public class BankAccountController {
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-        } catch (UserException ex) {
+        } catch (final UserException ex) {
             return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @PostMapping("/bank_account/create")
+    @PostMapping("/create")
     public ResponseEntity createBankAccount(@RequestBody final BankAccountDto bankAccountDto) {
         try {
             bankAccountService.createBankAccount(bankAccountDto);
             return new ResponseEntity<>("New bank account created", HttpStatus.CREATED);
 
-        } catch (UserException ex) {
+        } catch (final UserException ex) {
             return new ResponseEntity<>(ex.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @DeleteMapping("/bank_account/remove")
-    public ResponseEntity removeBankAccount(@RequestBody final BankAccountDto bankAccountDto) {
+    @DeleteMapping("/remove/{id}")
+    public ResponseEntity removeBankAccount(@PathVariable final Long id) {
         try{
-            bankAccountService.removeBankAccount(bankAccountDto);
+            bankAccountService.removeBankAccount(id);
             return new ResponseEntity<>("Bank account removed", OK);
-        } catch (UserException ex) {
+        } catch (final UserException ex) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

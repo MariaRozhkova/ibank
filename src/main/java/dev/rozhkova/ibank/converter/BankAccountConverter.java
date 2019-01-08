@@ -1,58 +1,42 @@
 package dev.rozhkova.ibank.converter;
-
-import dev.rozhkova.ibank.dto.BankCardDto;
-import dev.rozhkova.ibank.dto.UserDto;
-import dev.rozhkova.ibank.entity.BankAccountEntity;
 import dev.rozhkova.ibank.dto.BankAccountDto;
+import dev.rozhkova.ibank.dto.BankCardDto;
+import dev.rozhkova.ibank.entity.BankAccountEntity;
 import dev.rozhkova.ibank.entity.BankCardEntity;
-import dev.rozhkova.ibank.entity.UserEntity;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class BankAccountConverter implements DtoDboConverter<BankAccountDto, BankAccountEntity> {
-    private final UserConverter userConverter;
+
     private final BankCardConverter bankCardConverter;
 
     @Autowired
-    public BankAccountConverter(final UserConverter userConverter,
-                                final BankCardConverter bankCardConverter) {
-        this.userConverter = userConverter;
+    public BankAccountConverter(final BankCardConverter bankCardConverter) {
         this.bankCardConverter = bankCardConverter;
     }
 
     @Override
-    public BankAccountDto convertToDto(BankAccountEntity dbo) {
+    public BankAccountDto convertToDto(final BankAccountEntity dbo) {
         final BankAccountDto bankAccountDto = new BankAccountDto();
-        List<BankCardDto> bankCardDtos = bankCardConverter.convertToDto(dbo.getBankCardEntity());
-        UserDto userDto = userConverter.convertToDto(dbo.getUser());
-
+        final List<BankCardDto> bankCardDtos = bankCardConverter.convertToDto(dbo.getBankCardEntity());
         bankAccountDto.setMoneyAmount(dbo.getMoneyAmount());
-        bankAccountDto.setUser(userDto);
         bankAccountDto.setAccountNumber(dbo.getAccountNumber());
-        bankAccountDto.setBankCardDto(bankCardDtos);
+        bankAccountDto.setBankCardEntity(bankCardDtos);
         bankAccountDto.setEnabled(dbo.getEnabled());
-
         return bankAccountDto;
     }
 
     @Override
-    public BankAccountEntity convertToDbo(BankAccountDto dto) {
+    public BankAccountEntity convertToDbo(final BankAccountDto dto) {
         final BankAccountEntity bankAccountEntity = new BankAccountEntity();
-        List<BankCardEntity> bankCardEntities = bankCardConverter.convertToDbo(dto.getBankCardDto());
-        UserEntity userEntity = userConverter.convertToDbo(dto.getUser());
-
+        final List<BankCardEntity> bankCardEntities = bankCardConverter.convertToDbo(dto.getBankCardEntity());
         bankAccountEntity.setMoneyAmount(dto.getMoneyAmount());
-        bankAccountEntity.setUser(userEntity);
         bankAccountEntity.setAccountNumber(dto.getAccountNumber());
         bankAccountEntity.setBankCardEntity(bankCardEntities);
         bankAccountEntity.setEnabled(dto.getEnabled());
-
         return bankAccountEntity;
     }
 
