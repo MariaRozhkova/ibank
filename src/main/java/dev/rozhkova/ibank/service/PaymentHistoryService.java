@@ -37,4 +37,8 @@ public class PaymentHistoryService {
         paymentHistoryRepository.save(paymentHistoryEntity);
     }
 
+    public PaymentHistoryDto getPaymentHistoryOperationById(final Long id) {
+        return paymentHistoryConverter.convertToDto(paymentHistoryRepository.getOne(id));
+
+    }
 }
