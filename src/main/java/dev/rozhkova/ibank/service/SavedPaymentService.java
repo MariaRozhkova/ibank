@@ -8,12 +8,14 @@ import dev.rozhkova.ibank.repository.PaymentHistoryRepository;
 import dev.rozhkova.ibank.repository.SavedPaymentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class SavedPaymentService {
     private SavedPaymentRepository savedPaymentRepository;
     private SavedPaymentConverter savedPaymentConverter;
