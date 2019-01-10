@@ -11,15 +11,11 @@ import com.vaadin.ui.*;
 import dev.rozhkova.ibank.converter.UserConverter;
 import dev.rozhkova.ibank.dto.UserDto;
 import dev.rozhkova.ibank.exception.UserException;
-import dev.rozhkova.ibank.repository.UserRepository;
 import dev.rozhkova.ibank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 @SpringView(name = UsersView.USERS)
 public class UsersView extends VerticalLayout implements View, MultiSelectionListener<UserDto> {
@@ -62,6 +58,8 @@ public class UsersView extends VerticalLayout implements View, MultiSelectionLis
         grid.addColumn(UserDto::getEmail).setCaption("email");
         grid.addColumn(UserDto::getLogin).setCaption("login");
         grid.addColumn(UserDto::getBankAccount).setCaption("bank account");
+
+
         grid.setItems(userService.getAllUsers());
         grid.setWidth("900px");
 
@@ -82,16 +80,17 @@ public class UsersView extends VerticalLayout implements View, MultiSelectionLis
                                               dataProvider.refreshAll();
                                           });
 
-        modifyPersonButton = new Button("Modify user account",
+        modifyPersonButton = new Button("Edit user",
                                                clickEvent -> {
-                                                   final UserDto personToChange = grid.getSelectionModel().getFirstSelectedItem().get();
-                                                   UpdateUserDialog updateUserDialog = new UpdateUserDialog(personToChange, userService);
-                                                   updateUserDialog.setHeight("750px");
-                                                   updateUserDialog.setWidth("380px");
+                                                   final UserDto userDto = grid.getSelectionModel().getFirstSelectedItem().get();
+                                                   UpdateUserWindow
+                                                       updateUserWindow = new UpdateUserWindow(userDto, userService);
+                                                   updateUserWindow.setHeight("750px");
+                                                   updateUserWindow.setWidth("380px");
 
-                                                   updateUserDialog.setPositionX(300);
-                                                   updateUserDialog.setPositionY(100);
-                                                   UI.getCurrent().addWindow(updateUserDialog);
+                                                   updateUserWindow.setPositionX(300);
+                                                   updateUserWindow.setPositionY(100);
+                                                   UI.getCurrent().addWindow(updateUserWindow);
                                                    grid.getSelectionModel().deselectAll();
                                                    dataProvider.refreshAll();
                                                });
@@ -120,8 +119,6 @@ public class UsersView extends VerticalLayout implements View, MultiSelectionLis
         addComponent(filterTextField);
         addComponent(grid);
     }
-
-
 
 
     @Override

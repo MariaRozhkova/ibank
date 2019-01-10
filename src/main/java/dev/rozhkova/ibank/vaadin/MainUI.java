@@ -50,7 +50,7 @@ public class MainUI extends UI implements ViewDisplay {
     }
 
     @Override
-    public void showView(final View view) {
+    public void showView(final View view){
         springViewDisplay.setContent((Component) view);
     }
 }

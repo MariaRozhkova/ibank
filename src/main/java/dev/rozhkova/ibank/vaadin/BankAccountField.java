@@ -26,9 +26,7 @@ public class BankAccountField extends CustomField<List<BankAccountDto>> {
     protected Component initContent() {
         bankAccountDataProvider = DataProvider.ofCollection(bankAccountDtos);
 
-       //bankAccountComboBox.setDataProvider(bankAccountDataProvider);
-
-        //verticalLayout.addComponent(new HorizontalLayout(genresComboBox, addButton));
+        //
         addButton.setEnabled(false);
         return null;
     }

@@ -9,7 +9,7 @@ import dev.rozhkova.ibank.exception.UserException;
 import dev.rozhkova.ibank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class UpdateUserDialog extends Window {
+public class UpdateUserWindow extends Window {
 
     @Autowired
     UserConverter userConverter;
@@ -27,7 +27,7 @@ public class UpdateUserDialog extends Window {
 
     private Binder<UserDto> userDtoBinder = new Binder<>();
 
-    public UpdateUserDialog(final UserDto user, UserService userService) {
+    public UpdateUserWindow(final UserDto user, UserService userService) {
         super("Update user");
         center();
         setModal(true);
